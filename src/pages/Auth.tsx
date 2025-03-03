@@ -1,6 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import InputField from "../components/Auth/InputField";
+
+type FormInputs = {
+  name?: string;
+  email: string;
+  password: string;
+};
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(true);
@@ -8,28 +15,57 @@ export default function Auth() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormInputs>();
+
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    console.log(data);
+  };
 
   return (
     <StyledAuth>
       <AuthContainer>
         <h2>{isSignUp ? "Sign Up" : "Sign In"}</h2>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           {isSignUp && (
-            <InputField>
-              <label>Username</label>
-              <input type="text" placeholder="Enter your username" />
-            </InputField>
+            <InputField
+              title="Name"
+              placeholder="Enter Your Name"
+              inputType="text"
+              register={register("name", { required: "Name is required" })}
+              error={errors.name?.message}
+            />
           )}
-          <InputField>
-            <label>Email</label>
-            <input type="email" placeholder="Enter your email" />
-          </InputField>
-          <InputField>
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password" />
-          </InputField>
-          <Button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</Button>
+          <InputField
+            title="Email"
+            placeholder="Enter Your Email"
+            inputType="email"
+            register={register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email format",
+              },
+            })}
+            error={errors.email?.message}
+          />
+          <InputField
+            title="Password"
+            placeholder="Enter Your Password"
+            inputType="password"
+            register={register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            })}
+            error={errors.password?.message}
+          />
+          {isSignUp ? (
+            <Button type="submit">Sign Up</Button>
+          ) : (
+            <Button type="submit">Sign In</Button>
+          )}
         </Form>
         <Toggle>
           <span>
@@ -43,6 +79,8 @@ export default function Auth() {
     </StyledAuth>
   );
 }
+
+// Styled Components remain the same...
 
 const StyledAuth = styled.div`
   background-color: #f0f2f5;
@@ -78,30 +116,6 @@ const AuthContainer = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-`;
-
-const InputField = styled.div`
-  margin-bottom: 16px;
-
-  label {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    outline: none;
-
-    &:focus {
-      border-color: #007bff;
-    }
-  }
 `;
 
 const Button = styled.button`
