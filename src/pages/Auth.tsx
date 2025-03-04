@@ -1,72 +1,17 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useForm, SubmitHandler } from "react-hook-form";
-import InputField from "../components/Auth/InputField";
-
-type FormInputs = {
-  name?: string;
-  email: string;
-  password: string;
-};
+import SignUp from "../components/Auth/SignUp";
+import SignIn from "../components/Auth/SignIn";
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(true);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormInputs>();
-
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    console.log(data);
-  };
 
   return (
     <StyledAuth>
       <AuthContainer>
         <h2>{isSignUp ? "Sign Up" : "Sign In"}</h2>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          {isSignUp && (
-            <InputField
-              title="Name"
-              placeholder="Enter Your Name"
-              inputType="text"
-              register={register("name", { required: "Name is required" })}
-              error={errors.name?.message}
-            />
-          )}
-          <InputField
-            title="Email"
-            placeholder="Enter Your Email"
-            inputType="email"
-            register={register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Invalid email format",
-              },
-            })}
-            error={errors.email?.message}
-          />
-          <InputField
-            title="Password"
-            placeholder="Enter Your Password"
-            inputType="password"
-            register={register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
-            })}
-            error={errors.password?.message}
-          />
-          {isSignUp ? (
-            <Button type="submit">Sign Up</Button>
-          ) : (
-            <Button type="submit">Sign In</Button>
-          )}
-        </Form>
+        {isSignUp && <SignUp />}
+        {!isSignUp && <SignIn />}
         <Toggle>
           <span>
             {isSignUp ? "Already have an account?" : "Don't have an account?"}
@@ -79,8 +24,6 @@ export default function Auth() {
     </StyledAuth>
   );
 }
-
-// Styled Components remain the same...
 
 const StyledAuth = styled.div`
   background-color: #f0f2f5;
@@ -110,26 +53,6 @@ const AuthContainer = styled.div`
   @media (max-width: 480px) {
     padding: 30px;
     max-width: 90%;
-  }
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Button = styled.button`
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #0056b3;
   }
 `;
 
