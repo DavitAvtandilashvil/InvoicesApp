@@ -17,7 +17,6 @@ export const useSignUp = () => {
 
       // Save token to localStorage
       localStorage.setItem("token", data.token);
-      console.log("Response Data:", data); // Log full response from API
 
       // Redirect to home page
       navigate("/home");

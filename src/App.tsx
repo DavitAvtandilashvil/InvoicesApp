@@ -16,7 +16,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/auth" />} />
+          <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/auth" element={<Auth />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
