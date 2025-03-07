@@ -6,6 +6,9 @@ export const lightTheme = {
   filterBg: "#FFFFFF",
   filterShadow: "0px 10px 20px 0px #48549f40",
   checkboxBg: "#DFE3FA",
+  oneInvoiceBg: "#FFFFFF",
+  nameTxt: "#858BB2",
+  dateTxt: "#888EB0",
 };
 
 export const darkTheme = {
@@ -16,4 +19,7 @@ export const darkTheme = {
   filterBg: "#252945",
   filterShadow: "0px 10px 20px 0px #00000040",
   checkboxBg: "#1E2139",
+  oneInvoiceBg: "#1E2139",
+  nameTxt: "#FFFFFF",
+  dateTxt: "#DFE3FA",
 };
