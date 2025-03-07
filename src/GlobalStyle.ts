@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: ${({ theme }) => theme.bodyBg};;
     }
 `;
 

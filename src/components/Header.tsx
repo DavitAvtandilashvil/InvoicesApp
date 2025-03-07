@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { FaCircle, FaSun, FaMoon, FaSignOutAlt } from "react-icons/fa";
 import useInvoice from "../context/useInvoice";
 import { useUserInfo } from "../hooks/useUserInfo";
-import Wrapper from "../ui/Wrapper";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,51 +18,49 @@ export default function Header() {
 
   return (
     <HeaderContainer>
-      <Wrapper>
-        <StyledHeader>
-          <Logo>
-            <OvalIcon color="#fff"></OvalIcon>
-          </Logo>
-          <ProfileContainer>
-            {!isDarkMode ? (
-              <FaMoon
-                color="#7E88C3"
-                size={20}
-                onClick={() => setIsDarkMode(true)}
-                cursor="pointer"
-              />
-            ) : (
-              <FaSun
-                color="#7E88C3"
-                size={20}
-                onClick={() => setIsDarkMode(false)}
-                cursor="pointer"
-              />
-            )}
-            <Line></Line>
-            <Profile onClick={() => setOpenProfileModal((isOpen) => !isOpen)}>
-              <p>{user?.name[0]}</p>
-            </Profile>
-            {openProfileModal && (
-              <ProfileModal>
-                <LogOutDiv onClick={handleLogOut}>
-                  <FaSignOutAlt color="red" />
-                  <p>Log Out</p>
-                </LogOutDiv>
-              </ProfileModal>
-            )}
-          </ProfileContainer>
-        </StyledHeader>
-      </Wrapper>
+      <StyledHeader>
+        <Logo>
+          <OvalIcon color="#fff"></OvalIcon>
+        </Logo>
+        <ProfileContainer>
+          {!isDarkMode ? (
+            <FaMoon
+              color="#7E88C3"
+              size={20}
+              onClick={() => setIsDarkMode(true)}
+              cursor="pointer"
+            />
+          ) : (
+            <FaSun
+              color="#7E88C3"
+              size={20}
+              onClick={() => setIsDarkMode(false)}
+              cursor="pointer"
+            />
+          )}
+          <Line></Line>
+          <Profile onClick={() => setOpenProfileModal((isOpen) => !isOpen)}>
+            <p>{user?.name[0]}</p>
+          </Profile>
+          {openProfileModal && (
+            <ProfileModal>
+              <LogOutDiv onClick={handleLogOut}>
+                <FaSignOutAlt color="red" />
+                <p>Log Out</p>
+              </LogOutDiv>
+            </ProfileModal>
+          )}
+        </ProfileContainer>
+      </StyledHeader>
     </HeaderContainer>
   );
 }
 
 const HeaderContainer = styled.div`
   background-color: ${({ theme }) => theme.headerBg};
-  @media screen and (min-width: 1440px) {
+  /* @media screen and (min-width: 1440px) {
     background-color: #fff;
-  }
+  } */
 `;
 
 const StyledHeader = styled.div`
