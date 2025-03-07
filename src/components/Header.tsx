@@ -78,7 +78,7 @@ const StyledHeader = styled.div`
     width: 103px;
     height: 100vh;
     background-color: ${({ theme }) => theme.headerBg};
-    position: sticky;
+
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
   }

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import InputField from "./InputField";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSignIn } from "../../hooks/useSignIn";
 
 type FormInputs = {
   email: string;
@@ -8,6 +9,7 @@ type FormInputs = {
 };
 
 export default function SignIn() {
+  const { signIn } = useSignIn();
   const {
     register,
     handleSubmit,
@@ -15,7 +17,7 @@ export default function SignIn() {
   } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    console.log(data);
+    signIn(data.email, data.password);
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
