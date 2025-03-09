@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        font-family: "Plus Jakarta Sans", sans-serif;
+        font-family: "League Spartan", sans-serif;
         background-color: ${({ theme }) => theme.bodyBg};;
     }
 `;

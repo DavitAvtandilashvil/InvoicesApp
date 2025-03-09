@@ -17,50 +17,59 @@ export default function Header() {
   };
 
   return (
-    <HeaderContainer>
-      <StyledHeader>
-        <Logo>
-          <OvalIcon color="#fff"></OvalIcon>
-        </Logo>
-        <ProfileContainer>
-          {!isDarkMode ? (
-            <FaMoon
-              color="#7E88C3"
-              size={20}
-              onClick={() => setIsDarkMode(true)}
-              cursor="pointer"
-            />
-          ) : (
-            <FaSun
-              color="#7E88C3"
-              size={20}
-              onClick={() => setIsDarkMode(false)}
-              cursor="pointer"
-            />
-          )}
-          <Line></Line>
-          <Profile onClick={() => setOpenProfileModal((isOpen) => !isOpen)}>
-            <p>{user?.name[0]}</p>
-          </Profile>
-          {openProfileModal && (
-            <ProfileModal>
-              <LogOutDiv onClick={handleLogOut}>
-                <FaSignOutAlt color="red" />
-                <p>Log Out</p>
-              </LogOutDiv>
-            </ProfileModal>
-          )}
-        </ProfileContainer>
-      </StyledHeader>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <StyledHeader>
+          <Logo>
+            <OvalIcon color="#fff"></OvalIcon>
+          </Logo>
+          <ProfileContainer>
+            {!isDarkMode ? (
+              <FaMoon
+                color="#7E88C3"
+                size={20}
+                onClick={() => setIsDarkMode(true)}
+                cursor="pointer"
+              />
+            ) : (
+              <FaSun
+                color="#7E88C3"
+                size={20}
+                onClick={() => setIsDarkMode(false)}
+                cursor="pointer"
+              />
+            )}
+            <Line></Line>
+            <Profile onClick={() => setOpenProfileModal((isOpen) => !isOpen)}>
+              <p>{user?.name[0].toUpperCase()}</p>
+            </Profile>
+            {openProfileModal && (
+              <ProfileModal>
+                <LogOutDiv onClick={handleLogOut}>
+                  <FaSignOutAlt color="red" />
+                  <p>Log Out</p>
+                </LogOutDiv>
+              </ProfileModal>
+            )}
+          </ProfileContainer>
+        </StyledHeader>
+      </HeaderContainer>
+      <HeaderSpace></HeaderSpace>
+    </>
   );
 }
 
 const HeaderContainer = styled.div`
   background-color: ${({ theme }) => theme.headerBg};
-  /* @media screen and (min-width: 1440px) {
-    background-color: #fff;
-  } */
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+
+  @media screen and (min-width: 1440px) {
+    width: auto;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
 `;
 
 const StyledHeader = styled.div`
@@ -141,7 +150,7 @@ const Profile = styled.div`
   & > p {
     color: #fff;
     font-size: 20px;
-    margin-bottom: 3px;
+    padding-top: 2px;
   }
 `;
 
@@ -168,4 +177,12 @@ const LogOutDiv = styled.div`
   gap: 15px;
   color: red;
   cursor: pointer;
+`;
+
+const HeaderSpace = styled.div`
+  height: 80px;
+
+  @media screen and (min-width: 1440px) {
+    display: none;
+  }
 `;

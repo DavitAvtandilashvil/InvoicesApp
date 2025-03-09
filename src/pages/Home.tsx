@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import HomeHeader from "../components/Home/HomeHeader";
 import AllInvoices from "../components/Home/AllInvoices";
+import EmptyInvoices from "../components/Home/EmptyInvoices";
+import { useAllInvoice } from "../hooks/useAllInvoice";
 
 export default function Home() {
+  const { allInvoices } = useAllInvoice();
   return (
     <StyledHome>
       <HomeHeader />
-      <AllInvoices />
+      {allInvoices?.length === 0 ? <EmptyInvoices /> : <AllInvoices />}
     </StyledHome>
   );
 }

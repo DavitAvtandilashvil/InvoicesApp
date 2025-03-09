@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import OneInvoice from "./OneInvoice";
 import { useAllInvoice } from "../../hooks/useAllInvoice";
+import Loader from "../../ui/Loader";
 
 export default function AllInvoices() {
-  const { allInvoices } = useAllInvoice();
+  const { allInvoices, loading } = useAllInvoice();
+
+  if (loading) return <Loader />;
 
   return (
     <StyledAllInvoices>
