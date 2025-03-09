@@ -9,6 +9,8 @@ export const lightTheme = {
   oneInvoiceBg: "#FFFFFF",
   nameTxt: "#858BB2",
   dateTxt: "#888EB0",
+  draftBg: "#373B530F",
+  draftTxt: "#373B53",
 };
 
 export const darkTheme = {
@@ -22,4 +24,6 @@ export const darkTheme = {
   oneInvoiceBg: "#1E2139",
   nameTxt: "#FFFFFF",
   dateTxt: "#DFE3FA",
+  draftBg: "rgba(223, 227, 250, 0.0571)",
+  draftTxt: "#DFE3FA",
 };

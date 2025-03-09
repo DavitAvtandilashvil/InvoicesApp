@@ -1,30 +1,49 @@
 import styled from "styled-components";
 import { FaHashtag } from "react-icons/fa";
+import { AllInvoice } from "../../types/types";
 
-export default function OneInvoiceMobile() {
+interface OneInvoiceMobileProps {
+  invoiceData: AllInvoice;
+}
+
+export default function OneInvoiceMobile({
+  invoiceData,
+}: OneInvoiceMobileProps) {
+  const date = new Date(invoiceData.invoiceDate);
+
+  const formattedDate = `${date.getDate()} ${date.toLocaleString("en", {
+    month: "short",
+  })} ${date.getFullYear()}`;
+
   return (
     <StyledOneInvoice>
       <IdAndName>
         <IdContainer>
           <FaHashtag color="#7E88C3" />
-          <p>XM9141</p>
+          <p>{invoiceData.invoiceId}</p>
         </IdContainer>
-        <p>Jensen Huang</p>
+        <p>{invoiceData.billTo.clientName}</p>
       </IdAndName>
 
       <DateAndPaymentContainer>
         <DateAndPayment>
-          <p>Due 19 Aug 2021</p>
-          <h2>£ 1,800.90</h2>
+          <p>Due {formattedDate}</p>
+          <h2>£ {invoiceData.price}</h2>
         </DateAndPayment>
-        <PaymentStatus>
+        <PaymentStatus status={invoiceData.paymentStatus}>
           <div></div>
-          <p>Paid</p>
+          <p>{invoiceData.paymentStatus}</p>
         </PaymentStatus>
       </DateAndPaymentContainer>
     </StyledOneInvoice>
   );
 }
+
+const statusColors = {
+  Paid: { bg: "#33d69f0f", text: "#33d69f", dot: "#33d69f" },
+  Pending: { bg: "#FF8F000F", text: "#FF8F00", dot: "#FF8F00" },
+  Draft: { bg: "#373B530F", text: "#373B53", dot: "#373B53" },
+};
 
 const StyledOneInvoice = styled.div`
   width: 327px;
@@ -91,10 +110,13 @@ const DateAndPayment = styled.div`
   }
 `;
 
-const PaymentStatus = styled.div`
+const PaymentStatus = styled.div<{
+  status: keyof typeof statusColors;
+}>`
   width: 104px;
   height: 40px;
-  background-color: #33d69f0f;
+  background-color: ${({ status, theme }) =>
+    status === "Draft" ? theme.draftBg : statusColors[status].bg};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,7 +127,8 @@ const PaymentStatus = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #33d69f;
+    background-color: ${({ status, theme }) =>
+      status === "Draft" ? theme.draftTxt : statusColors[status].dot};
   }
 
   & > p {
@@ -113,6 +136,7 @@ const PaymentStatus = styled.div`
     font-size: 15px;
     line-height: 15px;
     letter-spacing: -0.25px;
-    color: #33d69f;
+    color: ${({ status, theme }) =>
+      status === "Draft" ? theme.draftTxt : statusColors[status].text};
   }
 `;

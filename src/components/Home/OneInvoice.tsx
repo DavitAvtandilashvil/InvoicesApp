@@ -1,15 +1,20 @@
 import styled from "styled-components";
 import OneInvoiceMobile from "./OneInvoiceMobile";
 import OneInvoiceDesktop from "./OneInvoiceDesktop";
+import { AllInvoice } from "../../types/types";
 
-export default function OneInvoice() {
+interface OneInvoiceProps {
+  invoiceData: AllInvoice;
+}
+
+export default function OneInvoice({ invoiceData }: OneInvoiceProps) {
   return (
     <StyledOneInvoice>
       <StyledForMobile>
-        <OneInvoiceMobile />
+        <OneInvoiceMobile invoiceData={invoiceData} />
       </StyledForMobile>
       <StyledForDesktop>
-        <OneInvoiceDesktop />
+        <OneInvoiceDesktop invoiceData={invoiceData} />
       </StyledForDesktop>
     </StyledOneInvoice>
   );

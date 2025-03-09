@@ -1,20 +1,34 @@
 import styled from "styled-components";
 import { FaHashtag } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
+import { AllInvoice } from "../../types/types";
 
-export default function OneInvoiceDesktop() {
+interface OneInvoiceDesktopProps {
+  invoiceData: AllInvoice;
+}
+
+export default function OneInvoiceDesktop({
+  invoiceData,
+}: OneInvoiceDesktopProps) {
+  const date = new Date();
+
+  const formattedDate = `${date.getDate()} ${date.toLocaleString("en", {
+    month: "short",
+  })} ${date.getFullYear()}`;
   return (
     <StyledOneInvoice>
       <IdContainer>
         <FaHashtag color="#7E88C3" />
-        <p>XM9141</p>
+        <InvoiceId>{invoiceData.invoiceId}</InvoiceId>
       </IdContainer>
-      <Date>Due 19 Aug 2021</Date>
-      <Name>Jensen Huang</Name>
-      <Price>£ 1,800.90</Price>
-      <PaymentStatus>
+      <InvoiceDate>Due {formattedDate}</InvoiceDate>
+      <Name>{invoiceData.billTo.clientName}</Name>
+      <Price>£ {invoiceData.price}</Price>
+      <PaymentStatus status={invoiceData.paymentStatus}>
         <div></div>
-        <p>Paid</p>
+        <PaymentStatusText status={invoiceData.paymentStatus}>
+          {invoiceData.paymentStatus}
+        </PaymentStatusText>
       </PaymentStatus>
       <ArrowRight>
         <FaChevronRight size={12} color="#7C5DFA" />
@@ -22,6 +36,12 @@ export default function OneInvoiceDesktop() {
     </StyledOneInvoice>
   );
 }
+
+const statusColors = {
+  Paid: { bg: "#33d69f0f", text: "#33d69f", dot: "#33d69f" },
+  Pending: { bg: "#FF8F000F", text: "#FF8F00", dot: "#FF8F00" },
+  Draft: { bg: "#373B530F", text: "#373B53", dot: "#373B53" },
+};
 
 const StyledOneInvoice = styled.div`
   width: 672px;
@@ -33,6 +53,7 @@ const StyledOneInvoice = styled.div`
   display: flex;
   align-items: center;
   padding: 0px 24px;
+  cursor: pointer;
 
   @media screen and (min-width: 1440px) {
     width: 730px;
@@ -46,13 +67,13 @@ const IdContainer = styled.div`
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-
-  & > p {
-    color: ${({ theme }) => theme.txtColor};
-  }
 `;
 
-const Date = styled.p`
+const InvoiceId = styled.p`
+  color: ${({ theme }) => theme.txtColor};
+`;
+
+const InvoiceDate = styled.p`
   font-weight: 500;
   font-size: 13px;
   line-height: 15px;
@@ -80,10 +101,11 @@ const Price = styled.p`
   margin-right: 40px;
 `;
 
-const PaymentStatus = styled.div`
+const PaymentStatus = styled.div<{ status: keyof typeof statusColors }>`
   width: 104px;
   height: 40px;
-  background-color: #33d69f0f;
+  background-color: ${({ status, theme }) =>
+    status === "Draft" ? theme.draftBg : statusColors[status].bg};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,16 +117,18 @@ const PaymentStatus = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #33d69f;
+    background-color: ${({ status, theme }) =>
+      status === "Draft" ? theme.draftTxt : statusColors[status].dot};
   }
+`;
 
-  & > p {
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 15px;
-    letter-spacing: -0.25px;
-    color: #33d69f;
-  }
+const PaymentStatusText = styled.p<{ status: keyof typeof statusColors }>`
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: ${({ status, theme }) =>
+    status === "Draft" ? theme.draftTxt : statusColors[status].text};
 `;
 
 const ArrowRight = styled.div``;

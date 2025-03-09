@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import OneInvoice from "./OneInvoice";
+import { useAllInvoice } from "../../hooks/useAllInvoice";
 
 export default function AllInvoices() {
+  const { allInvoices } = useAllInvoice();
+
   return (
     <StyledAllInvoices>
-      <OneInvoice />
-      <OneInvoice />
-      <OneInvoice />
-      <OneInvoice />
-      <OneInvoice />
+      {allInvoices?.map((item) => {
+        return <OneInvoice key={item.id} invoiceData={item} />;
+      })}
     </StyledAllInvoices>
   );
 }
