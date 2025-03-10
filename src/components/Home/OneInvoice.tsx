@@ -2,14 +2,17 @@ import styled from "styled-components";
 import OneInvoiceMobile from "./OneInvoiceMobile";
 import OneInvoiceDesktop from "./OneInvoiceDesktop";
 import { AllInvoice } from "../../types/types";
+import { useNavigate } from "react-router-dom";
 
 interface OneInvoiceProps {
   invoiceData: AllInvoice;
 }
 
 export default function OneInvoice({ invoiceData }: OneInvoiceProps) {
+  const navigate = useNavigate();
+
   return (
-    <StyledOneInvoice>
+    <StyledOneInvoice onClick={() => navigate(`/invoice/${invoiceData.id}`)}>
       <StyledForMobile>
         <OneInvoiceMobile invoiceData={invoiceData} />
       </StyledForMobile>

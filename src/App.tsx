@@ -7,6 +7,7 @@ import { darkTheme, lightTheme } from "./theme.ts";
 import useInvoice from "./context/useInvoice.ts";
 import Auth from "./pages/Auth.tsx";
 import ProtectedRoute from "./ui/ProtectedRoute.tsx";
+import SingleInvoice from "./pages/SingleInvoice.tsx";
 
 function App() {
   const { isDarkMode } = useInvoice();
@@ -21,6 +22,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route path="/home" element={<Home />} />
+              <Route path="/invoice/:id" element={<SingleInvoice />} />
             </Route>
           </Route>
         </Routes>
