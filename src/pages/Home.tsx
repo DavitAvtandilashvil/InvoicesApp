@@ -2,10 +2,10 @@ import styled from "styled-components";
 import HomeHeader from "../components/Home/HomeHeader";
 import AllInvoices from "../components/Home/AllInvoices";
 import EmptyInvoices from "../components/Home/EmptyInvoices";
-import { useAllInvoice } from "../hooks/useAllInvoice";
+import useInvoice from "../context/useInvoice";
 
 export default function Home() {
-  const { allInvoices } = useAllInvoice();
+  const { allInvoices } = useInvoice();
   return (
     <StyledHome>
       <HomeHeader />

@@ -1,15 +1,61 @@
 import styled from "styled-components";
 import { FaChevronDown, FaChevronUp, FaPlus } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useInvoice from "../../context/useInvoice";
+import { apiGetAllInvoices } from "../../services/apiGetAllInvoices";
 
 export default function HomeHeader() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
+  const filterQuery =
+    selectedFilters.length > 0
+      ? `?paymentStatus=${selectedFilters.join("&paymentStatus=")}`
+      : "";
+
+  const {
+    setAllInvoiceLoader,
+    setAllInvoiceError,
+    setAllInvoices,
+    allInvoices,
+  } = useInvoice();
+
+  const handleFilterChange = (status: string) => {
+    setSelectedFilters((prevFilters) =>
+      prevFilters.includes(status)
+        ? prevFilters.filter((filter) => filter !== status)
+        : [...prevFilters, status]
+    );
+  };
+
+  useEffect(() => {
+    const fetchAllInvoce = async () => {
+      setAllInvoiceError(null);
+      setAllInvoiceLoader(true);
+
+      try {
+        const data = await apiGetAllInvoices(filterQuery);
+        setAllInvoices(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setAllInvoiceError(err.message);
+        } else {
+          setAllInvoiceError("Somethin went wrong");
+        }
+      } finally {
+        setAllInvoiceLoader(false);
+      }
+    };
+
+    fetchAllInvoce();
+  }, [setAllInvoiceError, setAllInvoiceLoader, filterQuery, setAllInvoices]);
+
   return (
     <StyledHomeHeader>
       <InvoiceCounter>
         <h2>Invoices</h2>
-        <p>7 invoices</p>
-        <h3>There are 7 total invoices</h3>
+        <p>{allInvoices?.length || 0} invoices</p>
+        <h3>There are {allInvoices?.length || 0} total invoices</h3>
       </InvoiceCounter>
       <FilterContainer>
         <FilterDiv onClick={() => setIsFilterOpen((isOpen) => !isOpen)}>
@@ -23,18 +69,16 @@ export default function HomeHeader() {
 
           {isFilterOpen && (
             <FillterOptionsContainer onClick={(e) => e.stopPropagation()}>
-              <SingleOption>
-                <input type="checkbox" />
-                <p>Draft</p>
-              </SingleOption>
-              <SingleOption>
-                <input type="checkbox" />
-                <p>Pending</p>
-              </SingleOption>
-              <SingleOption>
-                <input type="checkbox" />
-                <p>Paid</p>
-              </SingleOption>
+              {["Draft", "Pending", "Paid"].map((status) => (
+                <SingleOption key={status}>
+                  <input
+                    type="checkbox"
+                    checked={selectedFilters.includes(status)}
+                    onChange={() => handleFilterChange(status)}
+                  />
+                  <p>{status}</p>
+                </SingleOption>
+              ))}
             </FillterOptionsContainer>
           )}
         </FilterDiv>
@@ -192,6 +236,7 @@ const SingleOption = styled.div`
     border-radius: 2px;
     border: 1px solid #7c5dfa;
     background-color: ${({ theme }) => theme.checkboxBg};
+    cursor: pointer;
 
     &:checked {
       background-color: #7c5dfa;
