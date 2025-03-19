@@ -5,11 +5,15 @@ import EmptyInvoices from "../components/Home/EmptyInvoices";
 import useInvoice from "../context/useInvoice";
 
 export default function Home() {
-  const { allInvoices } = useInvoice();
+  const { allInvoices, allInvoiceLoader } = useInvoice();
   return (
     <StyledHome>
       <HomeHeader />
-      {allInvoices?.length === 0 ? <EmptyInvoices /> : <AllInvoices />}
+      {allInvoices?.length === 0 && allInvoiceLoader === false ? (
+        <EmptyInvoices />
+      ) : (
+        <AllInvoices />
+      )}
     </StyledHome>
   );
 }

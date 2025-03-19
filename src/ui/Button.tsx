@@ -48,6 +48,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease-in-out;
 
   ${({ size }) => {
     switch (size) {
