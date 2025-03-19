@@ -3,20 +3,26 @@ import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PaymentStatus from "../components/SingleInvoice/PaymentStatus";
 import SingleInvoiceInfo from "../components/SingleInvoice/SingleInvoiceInfo";
+import MobileButtonDiv from "../components/SingleInvoice/MobileButtonDiv";
 
 export default function SingleInvoice() {
   const navigate = useNavigate();
   return (
-    <StyledSingleInvoice>
-      <GoBack onClick={() => navigate(-1)}>
-        <FaChevronLeft color="#7C5DFA" size={14} />
-        <p>Go Back</p>
-      </GoBack>
-      <PaymentStatus />
-      <SingleInvoiceInfo />
-    </StyledSingleInvoice>
+    <InvoiceContainer>
+      <StyledSingleInvoice>
+        <GoBack onClick={() => navigate(-1)}>
+          <FaChevronLeft color="#7C5DFA" size={14} />
+          <p>Go Back</p>
+        </GoBack>
+        <PaymentStatus />
+        <SingleInvoiceInfo />
+      </StyledSingleInvoice>
+      <MobileButtonDiv />
+    </InvoiceContainer>
   );
 }
+
+const InvoiceContainer = styled.div``;
 
 const StyledSingleInvoice = styled.div`
   width: 327px;

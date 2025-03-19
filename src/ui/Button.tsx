@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { MouseEvent, ReactNode } from "react";
 import styled from "styled-components";
 
 interface ButtonProps {
@@ -8,6 +8,7 @@ interface ButtonProps {
   colorthemetxt?: string;
   hoverthemebg?: string;
   hoverthemetxt?: string;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function Button({
@@ -17,6 +18,7 @@ export default function Button({
   colorthemetxt = "buttonTxt",
   hoverthemebg = "paidButtonHoverBg",
   hoverthemetxt = "",
+  onClick,
 }: ButtonProps) {
   return (
     <StyledButton
@@ -25,6 +27,7 @@ export default function Button({
       colorthemetxt={colorthemetxt}
       hoverthemebg={hoverthemebg}
       hoverthemetxt={hoverthemetxt}
+      onClick={onClick}
     >
       {children}
     </StyledButton>
