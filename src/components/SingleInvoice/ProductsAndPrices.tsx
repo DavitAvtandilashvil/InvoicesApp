@@ -9,7 +9,6 @@ export default function ProductsAndPrices() {
       <SingleProductPriceMobile />
       <ProductAndPriceUiDesktop />
       <SingleProductPriceDesktop />
-      <SingleProductPriceDesktop />
     </StyledProductsAndPrices>
   );
 }

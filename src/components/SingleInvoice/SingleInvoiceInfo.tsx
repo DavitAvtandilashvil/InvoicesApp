@@ -1,6 +1,7 @@
 import { FaHashtag } from "react-icons/fa";
 import styled from "styled-components";
 import ProductsAndPrices from "./ProductsAndPrices";
+import GrandTotal from "./GrandTotal";
 
 export default function SingleInvoiceInfo() {
   return (
@@ -51,6 +52,7 @@ export default function SingleInvoiceInfo() {
       </ClientInfoContainer>
 
       <ProductsAndPrices />
+      <GrandTotal />
     </StyledSingleInvoiceInfo>
   );
 }

@@ -17,11 +17,11 @@ export default function PaymentStatus() {
           colorthemebg="editButtonBg"
           colorthemetxt="editButtonTxt"
           hoverthemebg="editButtonHoverBg"
+          hoverthemetxt="editButtonHoverTxt"
         >
           Edit
         </Button>
         <Button
-          size="medium"
           colorthemebg="deleteButtonBg"
           hoverthemebg="deleteButtonHoverBg"
         >

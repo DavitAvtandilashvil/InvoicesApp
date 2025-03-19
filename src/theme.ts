@@ -17,8 +17,10 @@ export const lightTheme = {
   deleteButtonBg: "#EC5757",
   paidButtonBg: "#7C5DFA",
   editButtonHoverBg: "#DFE3FA",
+  editButtonHoverTxt: "#7E88C3",
   deleteButtonHoverBg: "#FF9797",
   paidButtonHoverBg: "#9277FF",
+  grandTotal: "#373B53",
 };
 
 export const darkTheme = {
@@ -40,6 +42,8 @@ export const darkTheme = {
   deleteButtonBg: "#EC5757",
   paidButtonBg: "#7C5DFA",
   editButtonHoverBg: "#FFFFFF",
+  editButtonHoverTxt: "#7E88C3",
   deleteButtonHoverBg: "#FF9797",
   paidButtonHoverBg: "#9277FF",
+  grandTotal: "#0C0E16",
 };

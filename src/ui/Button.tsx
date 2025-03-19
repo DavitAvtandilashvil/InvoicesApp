@@ -7,6 +7,7 @@ interface ButtonProps {
   colorthemebg?: string;
   colorthemetxt?: string;
   hoverthemebg?: string;
+  hoverthemetxt?: string;
 }
 
 export default function Button({
@@ -15,6 +16,7 @@ export default function Button({
   colorthemebg = "paidButtonBg",
   colorthemetxt = "buttonTxt",
   hoverthemebg = "paidButtonHoverBg",
+  hoverthemetxt = "",
 }: ButtonProps) {
   return (
     <StyledButton
@@ -22,6 +24,7 @@ export default function Button({
       colorthemebg={colorthemebg}
       colorthemetxt={colorthemetxt}
       hoverthemebg={hoverthemebg}
+      hoverthemetxt={hoverthemetxt}
     >
       {children}
     </StyledButton>
@@ -33,6 +36,7 @@ interface StyledButtonProps {
   colorthemebg: string;
   colorthemetxt: string;
   hoverthemebg: string;
+  hoverthemetxt: string;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -49,6 +53,8 @@ const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease-in-out;
+  font-family: inherit;
+  padding-top: 4px;
 
   ${({ size }) => {
     switch (size) {
@@ -63,5 +69,6 @@ const StyledButton = styled.button<StyledButtonProps>`
 
   &:hover {
     background-color: ${({ theme, hoverthemebg }) => theme[hoverthemebg]};
+    color: ${({ theme, hoverthemetxt }) => theme[hoverthemetxt]};
   }
 `;
