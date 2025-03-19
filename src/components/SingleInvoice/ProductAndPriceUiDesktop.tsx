@@ -3,14 +3,10 @@ import styled from "styled-components";
 export default function ProductAndPriceUiDesktop() {
   return (
     <StyledProductAndPriceUiDesktop>
-      <NameDiv>
-        <p>Item Name</p>
-      </NameDiv>
-      <PriceAndQuantityDiv>
-        <p>QTY.</p>
-        <h2>Price</h2>
-        <h3>Total</h3>
-      </PriceAndQuantityDiv>
+      <Item>Item Name</Item>
+      <Quantity>QTY.</Quantity>
+      <Price>Price</Price>
+      <Total>Total</Total>
     </StyledProductAndPriceUiDesktop>
   );
 }
@@ -24,9 +20,7 @@ const StyledProductAndPriceUiDesktop = styled.div`
     justify-content: space-between;
   }
 
-  p,
-  h2,
-  h3 {
+  p {
     font-weight: 500;
     font-size: 13px;
     line-height: 18px;
@@ -35,17 +29,21 @@ const StyledProductAndPriceUiDesktop = styled.div`
   }
 `;
 
-const NameDiv = styled.div``;
+const Item = styled.p`
+  width: 40%;
+`;
 
-const PriceAndQuantityDiv = styled.div`
-  display: flex;
-  align-items: center;
+const Quantity = styled.p`
+  width: 20%;
+  text-align: right;
+`;
 
-  & > h3 {
-    margin-left: 111px;
-  }
+const Price = styled.p`
+  width: 20%;
+  text-align: right;
+`;
 
-  & > h2 {
-    margin-left: 91px;
-  }
+const Total = styled.p`
+  width: 20%;
+  text-align: right;
 `;

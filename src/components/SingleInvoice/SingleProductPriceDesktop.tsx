@@ -3,7 +3,10 @@ import styled from "styled-components";
 export default function SingleProductPriceDesktop() {
   return (
     <StyledSingleProductPriceDesktop>
-      SingleProductPriceDesktop
+      <Item>Banner Design</Item>
+      <Quantity>1</Quantity>
+      <Price>£ 156.00</Price>
+      <Total>£ 156.00</Total>
     </StyledSingleProductPriceDesktop>
   );
 }
@@ -14,4 +17,40 @@ const StyledSingleProductPriceDesktop = styled.div`
   @media screen and (min-width: 768px) {
     display: flex;
   }
+
+  p {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: -0.1px;
+    color: ${({ theme }) => theme.editButtonTxt};
+  }
+
+  h2 {
+    font-family: League Spartan;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: ${({ theme }) => theme.txtColor};
+  }
+`;
+
+const Item = styled.h2`
+  width: 40%;
+`;
+
+const Quantity = styled.p`
+  width: 20%;
+  text-align: right;
+`;
+
+const Price = styled.p`
+  width: 20%;
+  text-align: right;
+`;
+
+const Total = styled.h2`
+  width: 20%;
+  text-align: right;
 `;

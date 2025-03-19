@@ -6,8 +6,9 @@ import ProductAndPriceUiDesktop from "./ProductAndPriceUiDesktop";
 export default function ProductsAndPrices() {
   return (
     <StyledProductsAndPrices>
-      <ProductAndPriceUiDesktop />
       <SingleProductPriceMobile />
+      <ProductAndPriceUiDesktop />
+      <SingleProductPriceDesktop />
       <SingleProductPriceDesktop />
     </StyledProductsAndPrices>
   );
@@ -26,5 +27,6 @@ const StyledProductsAndPrices = styled.div`
 
   @media screen and (min-width: 768px) {
     padding: 33px 32px 39px 32px;
+    gap: 32px;
   }
 `;
