@@ -19,7 +19,7 @@ export default function OneInvoiceMobile({
     <StyledOneInvoice>
       <IdAndName>
         <IdContainer>
-          <FaHashtag color="#7E88C3" />
+          <FaHashtag color="#7E88C3" size={12} />
           <p>{invoiceData.invoiceId}</p>
         </IdContainer>
         <p>{invoiceData.billTo.clientName}</p>
@@ -71,13 +71,14 @@ const IdAndName = styled.div`
 const IdContainer = styled.div`
   display: flex;
   align-items: center;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 15px;
-  letter-spacing: -0.25px;
 
   & > p {
     color: ${({ theme }) => theme.txtColor};
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    margin-top: 3px;
   }
 `;
 

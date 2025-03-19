@@ -11,6 +11,14 @@ export const lightTheme = {
   dateTxt: "#888EB0",
   draftBg: "#373B530F",
   draftTxt: "#373B53",
+  buttonTxt: "#FFFFFF",
+  editButtonBg: "#F9FAFE",
+  editButtonTxt: "#7E88C3",
+  deleteButtonBg: "#EC5757",
+  paidButtonBg: "#7C5DFA",
+  editButtonHoverBg: "#DFE3FA",
+  deleteButtonHoverBg: "#FF9797",
+  paidButtonHoverBg: "#9277FF",
 };
 
 export const darkTheme = {
@@ -26,4 +34,12 @@ export const darkTheme = {
   dateTxt: "#DFE3FA",
   draftBg: "rgba(223, 227, 250, 0.0571)",
   draftTxt: "#DFE3FA",
+  buttonTxt: "#FFFFFF",
+  editButtonBg: "#252945",
+  editButtonTxt: "#DFE3FA",
+  deleteButtonBg: "#EC5757",
+  paidButtonBg: "#7C5DFA",
+  editButtonHoverBg: "#FFFFFF",
+  deleteButtonHoverBg: "#FF9797",
+  paidButtonHoverBg: "#9277FF",
 };

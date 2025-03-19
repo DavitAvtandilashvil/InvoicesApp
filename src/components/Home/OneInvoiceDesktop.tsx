@@ -18,7 +18,7 @@ export default function OneInvoiceDesktop({
   return (
     <StyledOneInvoice>
       <IdContainer>
-        <FaHashtag color="#7E88C3" />
+        <FaHashtag color="#7E88C3" size={12} />
         <InvoiceId>{invoiceData.invoiceId}</InvoiceId>
       </IdContainer>
       <InvoiceDate>Due {formattedDate}</InvoiceDate>
@@ -63,14 +63,15 @@ const StyledOneInvoice = styled.div`
 const IdContainer = styled.div`
   display: flex;
   align-items: center;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 15px;
-  letter-spacing: -0.25px;
 `;
 
 const InvoiceId = styled.p`
   color: ${({ theme }) => theme.txtColor};
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  margin-top: 3px;
 `;
 
 const InvoiceDate = styled.p`
