@@ -13,13 +13,11 @@ export default function SingleInvoice() {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
-    singleInvoice,
     setSingleInvoice,
     setSingleInvoiceLoader,
     setSingleInvoiceError,
     singleInvoiceLoader,
   } = useInvoice();
-  console.log(singleInvoice);
 
   useEffect(() => {
     const fetchSingleInvoice = async () => {

@@ -11,6 +11,13 @@ const GlobalStyle = createGlobalStyle`
         font-family: "League Spartan", sans-serif;
         background-color: ${({ theme }) => theme.bodyBg};;
     }
+
+    .Toastify__toast {
+    @media (max-width: 768px) {
+      font-size: 14px;
+      width: 300px;
+    }
+  }
 `;
 
 export default GlobalStyle;
