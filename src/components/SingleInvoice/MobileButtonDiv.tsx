@@ -1,7 +1,30 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
+import { toast } from "react-toastify";
+import { deleteSingleInvoice } from "../../services/apiDeleteSingleInvoice";
+import { useNavigate } from "react-router-dom";
 
-export default function MobileButtonDiv() {
+interface MobileButtonDivProps {
+  invoiceId: string;
+}
+
+export default function MobileButtonDiv({ invoiceId }: MobileButtonDivProps) {
+  const navigate = useNavigate();
+
+  const deleteInvoice = async (id: string) => {
+    try {
+      const data = await deleteSingleInvoice(id);
+      toast.success(data.message);
+      navigate("/home");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
   return (
     <StyledMobileButtonDiv>
       <ButtonsContainer>
@@ -17,6 +40,7 @@ export default function MobileButtonDiv() {
         <Button
           colorthemebg="deleteButtonBg"
           hoverthemebg="deleteButtonHoverBg"
+          onClick={() => deleteInvoice(invoiceId)}
         >
           delete
         </Button>

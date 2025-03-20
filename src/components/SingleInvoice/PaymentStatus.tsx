@@ -1,9 +1,28 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
 import useInvoice from "../../context/useInvoice";
+import { useNavigate } from "react-router-dom";
+import { deleteSingleInvoice } from "../../services/apiDeleteSingleInvoice";
+import { toast } from "react-toastify";
 
 export default function PaymentStatus() {
   const { singleInvoice } = useInvoice();
+
+  const navigate = useNavigate();
+
+  const deleteInvoice = async (id: string) => {
+    try {
+      const data = await deleteSingleInvoice(id);
+      toast.success(data.message);
+      navigate("/home");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
   return (
     <StyledPaymentStatus>
       <StatusDiv>
@@ -26,6 +45,7 @@ export default function PaymentStatus() {
         <Button
           colorthemebg="deleteButtonBg"
           hoverthemebg="deleteButtonHoverBg"
+          onClick={() => deleteInvoice(singleInvoice?.id ?? "")}
         >
           delete
         </Button>

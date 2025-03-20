@@ -13,6 +13,7 @@ export default function SingleInvoice() {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
+    singleInvoice,
     setSingleInvoice,
     setSingleInvoiceLoader,
     setSingleInvoiceError,
@@ -53,7 +54,7 @@ export default function SingleInvoice() {
         <PaymentStatus />
         <SingleInvoiceInfo />
       </StyledSingleInvoice>
-      <MobileButtonDiv />
+      <MobileButtonDiv invoiceId={singleInvoice?.id ?? ""} />
     </InvoiceContainer>
   );
 }
