@@ -20,8 +20,6 @@ export default function Home() {
 
 const StyledHome = styled.div`
   padding: 36px 24px;
-  /* width: 327px;
-  margin: auto; */
 
   @media screen and (min-width: 768px) {
     padding: 61px 0px 0px 0px;

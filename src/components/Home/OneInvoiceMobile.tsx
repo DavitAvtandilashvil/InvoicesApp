@@ -1,20 +1,15 @@
 import styled from "styled-components";
 import { FaHashtag } from "react-icons/fa";
-import { AllInvoice } from "../../types/types";
+import { Invoice } from "../../types/types";
+import { formatDate } from "../../services/Date";
 
 interface OneInvoiceMobileProps {
-  invoiceData: AllInvoice;
+  invoiceData: Invoice;
 }
 
 export default function OneInvoiceMobile({
   invoiceData,
 }: OneInvoiceMobileProps) {
-  const date = new Date(invoiceData.invoiceDate);
-
-  const formattedDate = `${date.getDate()} ${date.toLocaleString("en", {
-    month: "short",
-  })} ${date.getFullYear()}`;
-
   return (
     <StyledOneInvoice>
       <IdAndName>
@@ -27,7 +22,7 @@ export default function OneInvoiceMobile({
 
       <DateAndPaymentContainer>
         <DateAndPayment>
-          <p>Due {formattedDate}</p>
+          <p>Due {formatDate(invoiceData.invoiceDate)}</p>
           <h2>£ {invoiceData.price}</h2>
         </DateAndPayment>
         <PaymentStatus status={invoiceData.paymentStatus}>

@@ -1,27 +1,23 @@
 import styled from "styled-components";
 import { FaHashtag } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
-import { AllInvoice } from "../../types/types";
+import { Invoice } from "../../types/types";
+import { formatDate } from "../../services/Date";
 
 interface OneInvoiceDesktopProps {
-  invoiceData: AllInvoice;
+  invoiceData: Invoice;
 }
 
 export default function OneInvoiceDesktop({
   invoiceData,
 }: OneInvoiceDesktopProps) {
-  const date = new Date();
-
-  const formattedDate = `${date.getDate()} ${date.toLocaleString("en", {
-    month: "short",
-  })} ${date.getFullYear()}`;
   return (
     <StyledOneInvoice>
       <IdContainer>
         <FaHashtag color="#7E88C3" size={12} />
         <InvoiceId>{invoiceData.invoiceId}</InvoiceId>
       </IdContainer>
-      <InvoiceDate>Due {formattedDate}</InvoiceDate>
+      <InvoiceDate>Due {formatDate(invoiceData.invoiceDate)}</InvoiceDate>
       <Name>{invoiceData.billTo.clientName}</Name>
       <Price>£ {invoiceData.price}</Price>
       <PaymentStatus status={invoiceData.paymentStatus}>
@@ -130,6 +126,7 @@ const PaymentStatusText = styled.p<{ status: keyof typeof statusColors }>`
   letter-spacing: -0.25px;
   color: ${({ status, theme }) =>
     status === "Draft" ? theme.draftTxt : statusColors[status].text};
+  margin-top: 3px;
 `;
 
 const ArrowRight = styled.div``;

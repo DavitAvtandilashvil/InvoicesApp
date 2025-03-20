@@ -1,12 +1,50 @@
 import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PaymentStatus from "../components/SingleInvoice/PaymentStatus";
 import SingleInvoiceInfo from "../components/SingleInvoice/SingleInvoiceInfo";
 import MobileButtonDiv from "../components/SingleInvoice/MobileButtonDiv";
+import { useEffect } from "react";
+import useInvoice from "../context/useInvoice";
+import { getSingleInvoice } from "../services/apiGetSingleInvoice";
+import Loader from "../ui/Loader";
 
 export default function SingleInvoice() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const {
+    singleInvoice,
+    setSingleInvoice,
+    setSingleInvoiceLoader,
+    setSingleInvoiceError,
+    singleInvoiceLoader,
+  } = useInvoice();
+  console.log(singleInvoice);
+
+  useEffect(() => {
+    const fetchSingleInvoice = async () => {
+      setSingleInvoiceLoader(true);
+      setSingleInvoiceError(null);
+
+      try {
+        const data = await getSingleInvoice(id ?? "");
+        setSingleInvoice(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setSingleInvoiceError(err.message);
+        } else {
+          setSingleInvoiceError("Something went wrong");
+        }
+      } finally {
+        setSingleInvoiceLoader(false);
+      }
+    };
+
+    fetchSingleInvoice();
+  }, [setSingleInvoiceError, setSingleInvoiceLoader, id, setSingleInvoice]);
+
+  if (singleInvoiceLoader) return <Loader />;
+
   return (
     <InvoiceContainer>
       <StyledSingleInvoice>
@@ -30,6 +68,7 @@ const StyledSingleInvoice = styled.div`
 
   @media screen and (min-width: 768px) {
     width: 688px;
+    padding-bottom: 30px;
   }
 
   @media screen and (min-width: 1440px) {
@@ -43,6 +82,7 @@ const GoBack = styled.div`
   align-items: center;
   gap: 24px;
   cursor: pointer;
+  width: 90px;
 
   & > p {
     color: ${({ theme }) => theme.txtColor};

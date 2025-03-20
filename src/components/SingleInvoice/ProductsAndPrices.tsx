@@ -1,14 +1,26 @@
+import React from "react";
 import styled from "styled-components";
 import SingleProductPriceMobile from "./SingleProductPriceMobile";
 import SingleProductPriceDesktop from "./SingleProductPriceDesktop";
 import ProductAndPriceUiDesktop from "./ProductAndPriceUiDesktop";
+import { Items } from "../../types/types";
 
-export default function ProductsAndPrices() {
+interface ProductsAndPricesProps {
+  items: Items[];
+}
+
+export default function ProductsAndPrices({ items }: ProductsAndPricesProps) {
   return (
     <StyledProductsAndPrices>
-      <SingleProductPriceMobile />
       <ProductAndPriceUiDesktop />
-      <SingleProductPriceDesktop />
+      {items.map((item) => {
+        return (
+          <React.Fragment key={item.itemName}>
+            <SingleProductPriceMobile item={item} />
+            <SingleProductPriceDesktop item={item} />
+          </React.Fragment>
+        );
+      })}
     </StyledProductsAndPrices>
   );
 }

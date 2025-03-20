@@ -4,7 +4,7 @@ export interface UserInfo {
   _id: string;
 }
 
-export interface AllInvoice {
+export interface Invoice {
   id: string;
   invoiceId: string;
   clientName: string;
@@ -28,11 +28,13 @@ export interface AllInvoice {
   invoiceDate: string;
   paymentTerms: string;
   projectDescription: string;
-  items: {
-    itemName: string;
-    quantity: number;
-    price: number;
-    total: number;
-  }[];
+  items: Items[];
   userId: string;
+}
+
+export interface Items {
+  itemName: string;
+  quantity: number;
+  price: number;
+  total: number;
 }

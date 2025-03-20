@@ -1,13 +1,22 @@
 import styled from "styled-components";
+import { Items } from "../../types/types";
 
-export default function SingleProductPriceMobile() {
+interface SingleProductPriceMobileProps {
+  item: Items;
+}
+
+export default function SingleProductPriceMobile({
+  item,
+}: SingleProductPriceMobileProps) {
   return (
     <StyledSingleProductPriceMobile>
       <TitleAndQuantityDiv>
-        <h2>Banner Design</h2>
-        <p>1 x £ 156.00</p>
+        <h2>{item?.itemName}</h2>
+        <p>
+          {item?.quantity} x £ {item?.price}
+        </p>
       </TitleAndQuantityDiv>
-      <Price>£ 156.00</Price>
+      <Price>£ {item?.total}</Price>
     </StyledSingleProductPriceMobile>
   );
 }

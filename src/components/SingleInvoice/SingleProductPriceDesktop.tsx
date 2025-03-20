@@ -1,12 +1,19 @@
 import styled from "styled-components";
+import { Items } from "../../types/types";
 
-export default function SingleProductPriceDesktop() {
+interface SingleProductPriceDesktopProps {
+  item: Items;
+}
+
+export default function SingleProductPriceDesktop({
+  item,
+}: SingleProductPriceDesktopProps) {
   return (
     <StyledSingleProductPriceDesktop>
-      <Item>Banner Design</Item>
-      <Quantity>1</Quantity>
-      <Price>£ 156.00</Price>
-      <Total>£ 156.00</Total>
+      <Item>{item.itemName}</Item>
+      <Quantity>{item.quantity}</Quantity>
+      <Price>£ {item.price}</Price>
+      <Total>£ {item.price}</Total>
     </StyledSingleProductPriceDesktop>
   );
 }

@@ -2,23 +2,29 @@ import { FaHashtag } from "react-icons/fa";
 import styled from "styled-components";
 import ProductsAndPrices from "./ProductsAndPrices";
 import GrandTotal from "./GrandTotal";
+import useInvoice from "../../context/useInvoice";
+import { calculatePaymentDue, formatDate } from "../../services/Date";
 
 export default function SingleInvoiceInfo() {
+  const { singleInvoice } = useInvoice();
+
+  if (!singleInvoice) return;
+
   return (
     <StyledSingleInvoiceInfo>
       <IdAndAddress>
         <IdAndDescription>
           <IdContainer>
             <FaHashtag color="#7E88C3" size={12} />
-            <p>XM9141</p>
+            <p>{singleInvoice?.invoiceId}</p>
           </IdContainer>
-          <p>Graphic Design</p>
+          <p>{singleInvoice?.projectDescription}</p>
         </IdAndDescription>
         <AddressContainer>
-          <p>19 Union Terrace</p>
-          <p>London</p>
-          <p>E1 3EZ</p>
-          <p>United Kingdom</p>
+          <p>{singleInvoice?.billFrom.streetAddress}</p>
+          <p>{singleInvoice?.billFrom.city}</p>
+          <p>{singleInvoice?.billFrom.postCode}</p>
+          <p>{singleInvoice?.billFrom.country}</p>
         </AddressContainer>
       </IdAndAddress>
 
@@ -27,32 +33,37 @@ export default function SingleInvoiceInfo() {
           <DateAndDueContainer>
             <InvoiceDataContainer>
               <h2>Invoice Date</h2>
-              <p>21 Aug 2021</p>
+              <p>{formatDate(singleInvoice?.invoiceDate)}</p>
             </InvoiceDataContainer>
             <PaymentDueContainer>
-              <h2>Invoice Date</h2>
-              <p>21 Aug 2021</p>
+              <h2>Payment Due</h2>
+              <p>
+                {calculatePaymentDue(
+                  singleInvoice?.invoiceDate,
+                  singleInvoice?.paymentTerms
+                )}
+              </p>
             </PaymentDueContainer>
           </DateAndDueContainer>
           <BillToContainer>
             <h2>Bill To</h2>
-            <p>Alex Grim</p>
+            <p>{singleInvoice?.billTo.clientName}</p>
             <StreetDetails>
-              <p>84 Church Way</p>
-              <p>Bradford</p>
-              <p>BD1 9PB</p>
-              <p>United Kingdom</p>
+              <p>{singleInvoice?.billTo.streetAddress}</p>
+              <p>{singleInvoice?.billTo.city}</p>
+              <p>{singleInvoice?.billTo.postCode}</p>
+              <p>{singleInvoice?.billTo.country}</p>
             </StreetDetails>
           </BillToContainer>
         </DateAndBillContainer>
         <SentToContainer>
           <h2>Sent to</h2>
-          <p>alexgrim@mail.com</p>
+          <p>{singleInvoice?.billTo.clientEmail}</p>
         </SentToContainer>
       </ClientInfoContainer>
 
-      <ProductsAndPrices />
-      <GrandTotal />
+      <ProductsAndPrices items={singleInvoice?.items} />
+      <GrandTotal grandTotal={singleInvoice?.price} />
     </StyledSingleInvoiceInfo>
   );
 }

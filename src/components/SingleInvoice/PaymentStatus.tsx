@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
+import useInvoice from "../../context/useInvoice";
 
 export default function PaymentStatus() {
+  const { singleInvoice } = useInvoice();
   return (
     <StyledPaymentStatus>
       <StatusDiv>
         <p>Status</p>
-        <Status>
+        <Status status={singleInvoice?.paymentStatus ?? "Draft"}>
           <div></div>
-          <p>Pending</p>
+          <p>{singleInvoice?.paymentStatus}</p>
         </Status>
       </StatusDiv>
       <ButtonsDiv>
@@ -32,6 +34,12 @@ export default function PaymentStatus() {
     </StyledPaymentStatus>
   );
 }
+
+const statusColors = {
+  Paid: { bg: "#33d69f0f", text: "#33d69f", dot: "#33d69f" },
+  Pending: { bg: "#FF8F000F", text: "#FF8F00", dot: "#FF8F00" },
+  Draft: { bg: "#373B530F", text: "#373B53", dot: "#373B53" },
+};
 
 const StyledPaymentStatus = styled.div`
   margin-top: 31px;
@@ -72,22 +80,23 @@ const StatusDiv = styled.div`
   }
 `;
 
-const Status = styled.div`
+const Status = styled.div<{ status: keyof typeof statusColors }>`
   width: 104px;
   height: 40px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   border-radius: 6px;
-  background-color: #ff8f000f;
+  background-color: ${({ status, theme }) =>
+    status === "Draft" ? theme.draftBg : statusColors[status].bg};
 
   & > div {
     width: 8px;
     height: 8px;
-    background-color: #ff8f00;
     border-radius: 50%;
+    background-color: ${({ status, theme }) =>
+      status === "Draft" ? theme.draftTxt : statusColors[status].dot};
   }
 
   & > p {
@@ -95,7 +104,9 @@ const Status = styled.div`
     font-size: 15px;
     line-height: 15px;
     letter-spacing: -0.25px;
-    color: #ff8f00;
+    color: ${({ status, theme }) =>
+      status === "Draft" ? theme.draftTxt : statusColors[status].text};
+    margin-top: 3px;
   }
 `;
 

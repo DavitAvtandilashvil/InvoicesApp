@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import OneInvoiceMobile from "./OneInvoiceMobile";
 import OneInvoiceDesktop from "./OneInvoiceDesktop";
-import { AllInvoice } from "../../types/types";
+import { Invoice } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 
 interface OneInvoiceProps {
-  invoiceData: AllInvoice;
+  invoiceData: Invoice;
 }
 
 export default function OneInvoice({ invoiceData }: OneInvoiceProps) {

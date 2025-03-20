@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
-export default function GrandTotal() {
+interface GrandTotalProps {
+  grandTotal: number;
+}
+
+export default function GrandTotal({ grandTotal }: GrandTotalProps) {
   return (
     <StyledGrandTotal>
       <Title>Grand Total</Title>
-      <Total>£ 556.00</Total>
+      <Total>£ {grandTotal}</Total>
     </StyledGrandTotal>
   );
 }
