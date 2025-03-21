@@ -3,6 +3,7 @@ import styled from "styled-components";
 import BillFrom from "./BillFrom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PostInvoice } from "../../types/types";
+import BillTo from "./BillTo";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -33,6 +34,7 @@ export default function AddOrEditInvoice({
           </GoBack>
           <Title>New Invoice</Title>
           <BillFrom register={register} errors={errors} />
+          <BillTo register={register} errors={errors} />
         </StyledAddOrEditInvoice>
         <button>submit</button>
       </StyledAddOrEditInvoiceModal>
@@ -81,11 +83,11 @@ const GoBack = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    margin-top: 49px;
+    padding-top: 49px;
   }
 
   @media screen and (min-width: 1440px) {
-    margin-top: 65px;
+    padding-top: 65px;
   }
 `;
 
