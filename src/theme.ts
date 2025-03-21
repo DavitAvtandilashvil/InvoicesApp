@@ -2,6 +2,7 @@ export const lightTheme = {
   txtColor: "#0C0E16",
   headerBg: "#373B53",
   bodyBg: "#F8F8FB",
+  secondaryBg: "#FFFFFF",
   txtSecondary: "#888EB0",
   filterBg: "#FFFFFF",
   filterShadow: "0px 10px 20px 0px #48549f40",
@@ -21,12 +22,15 @@ export const lightTheme = {
   deleteButtonHoverBg: "#FF9797",
   paidButtonHoverBg: "#9277FF",
   grandTotal: "#373B53",
+  labelTxt: "#7E88C3",
+  border: "#DFE3FA",
 };
 
 export const darkTheme = {
   txtColor: "#FFFFFF",
   headerBg: "#1E2139",
   bodyBg: "#141625",
+  secondaryBg: "#141625",
   txtSecondary: "#DFE3FA",
   filterBg: "#252945",
   filterShadow: "0px 10px 20px 0px #00000040",
@@ -46,4 +50,6 @@ export const darkTheme = {
   deleteButtonHoverBg: "#FF9797",
   paidButtonHoverBg: "#9277FF",
   grandTotal: "#0C0E16",
+  labelTxt: "#888EB0",
+  border: "#252945",
 };

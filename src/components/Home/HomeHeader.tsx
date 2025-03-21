@@ -3,10 +3,14 @@ import { FaChevronDown, FaChevronUp, FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import useInvoice from "../../context/useInvoice";
 import { apiGetAllInvoices } from "../../services/apiGetAllInvoices";
+import AddOrEditInvoice from "../AddInvoice/AddOrEditInvoice";
 
 export default function HomeHeader() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [newInvoiceOpen, setNewInvoiceOpen] = useState(() => {
+    return localStorage.getItem("newInvoiceOpen");
+  });
 
   const filterQuery =
     selectedFilters.length > 0
@@ -27,6 +31,10 @@ export default function HomeHeader() {
         : [...prevFilters, status]
     );
   };
+
+  useEffect(() => {
+    localStorage.setItem("newInvoiceOpen", newInvoiceOpen?.toString() ?? "");
+  }, [newInvoiceOpen]);
 
   useEffect(() => {
     const fetchAllInvoce = async () => {
@@ -51,46 +59,51 @@ export default function HomeHeader() {
   }, [setAllInvoiceError, setAllInvoiceLoader, filterQuery, setAllInvoices]);
 
   return (
-    <StyledHomeHeader>
-      <InvoiceCounter>
-        <h2>Invoices</h2>
-        <p>{allInvoices?.length || 0} invoices</p>
-        <h3>There are {allInvoices?.length || 0} total invoices</h3>
-      </InvoiceCounter>
-      <FilterContainer>
-        <FilterDiv onClick={() => setIsFilterOpen((isOpen) => !isOpen)}>
-          <h3>Filter</h3>
-          <h2>Filter by status</h2>
-          {!isFilterOpen ? (
-            <FaChevronDown color="#7C5DFA" size={14} />
-          ) : (
-            <FaChevronUp color="#7C5DFA" size={14} />
-          )}
+    <>
+      <StyledHomeHeader>
+        <InvoiceCounter>
+          <h2>Invoices</h2>
+          <p>{allInvoices?.length || 0} invoices</p>
+          <h3>There are {allInvoices?.length || 0} total invoices</h3>
+        </InvoiceCounter>
+        <FilterContainer>
+          <FilterDiv onClick={() => setIsFilterOpen((isOpen) => !isOpen)}>
+            <h3>Filter</h3>
+            <h2>Filter by status</h2>
+            {!isFilterOpen ? (
+              <FaChevronDown color="#7C5DFA" size={14} />
+            ) : (
+              <FaChevronUp color="#7C5DFA" size={14} />
+            )}
 
-          {isFilterOpen && (
-            <FillterOptionsContainer onClick={(e) => e.stopPropagation()}>
-              {["Draft", "Pending", "Paid"].map((status) => (
-                <SingleOption key={status}>
-                  <input
-                    type="checkbox"
-                    checked={selectedFilters.includes(status)}
-                    onChange={() => handleFilterChange(status)}
-                  />
-                  <p>{status}</p>
-                </SingleOption>
-              ))}
-            </FillterOptionsContainer>
-          )}
-        </FilterDiv>
-        <NewDiv>
-          <PlusCircle>
-            <FaPlus color="#7C5DFA" />
-          </PlusCircle>
-          <p>New</p>
-          <h3>New Invoice</h3>
-        </NewDiv>
-      </FilterContainer>
-    </StyledHomeHeader>
+            {isFilterOpen && (
+              <FillterOptionsContainer onClick={(e) => e.stopPropagation()}>
+                {["Draft", "Pending", "Paid"].map((status) => (
+                  <SingleOption key={status}>
+                    <input
+                      type="checkbox"
+                      checked={selectedFilters.includes(status)}
+                      onChange={() => handleFilterChange(status)}
+                    />
+                    <p>{status}</p>
+                  </SingleOption>
+                ))}
+              </FillterOptionsContainer>
+            )}
+          </FilterDiv>
+          <NewDiv onClick={() => setNewInvoiceOpen("true")}>
+            <PlusCircle>
+              <FaPlus color="#7C5DFA" />
+            </PlusCircle>
+            <p>New</p>
+            <h3>New Invoice</h3>
+          </NewDiv>
+        </FilterContainer>
+      </StyledHomeHeader>
+      {newInvoiceOpen === "true" && (
+        <AddOrEditInvoice setNewInvoiceOpen={setNewInvoiceOpen} />
+      )}
+    </>
   );
 }
 
