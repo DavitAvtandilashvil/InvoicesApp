@@ -16,6 +16,7 @@ export default function BillTo({ register, errors }: BillToProps) {
         <SingleInput
           title="Clients Name"
           gridcolumn="span 2"
+          gridcolumntablet="span 3"
           inputType="text"
           register={register("billTo.clientName", {
             required: "Client Name is required",
@@ -25,6 +26,7 @@ export default function BillTo({ register, errors }: BillToProps) {
         <SingleInput
           title="Clients Email"
           gridcolumn="span 2"
+          gridcolumntablet="span 3"
           inputType="text"
           register={register("billTo.clientEmail", {
             required: "Client Email is required",
@@ -34,6 +36,7 @@ export default function BillTo({ register, errors }: BillToProps) {
         <SingleInput
           title="Street Address"
           gridcolumn="span 2"
+          gridcolumntablet="span 3"
           inputType="text"
           register={register("billTo.streetAddress", {
             required: "Street Address is required",
@@ -43,6 +46,7 @@ export default function BillTo({ register, errors }: BillToProps) {
         <SingleInput
           title="City"
           gridcolumn="1"
+          gridcolumntablet="1"
           inputType="text"
           register={register("billTo.city", {
             required: "City is required",
@@ -52,6 +56,7 @@ export default function BillTo({ register, errors }: BillToProps) {
         <SingleInput
           title="Post Code"
           gridcolumn="2"
+          gridcolumntablet="2"
           inputType="text"
           register={register("billTo.postCode", {
             required: "City is required",
@@ -61,6 +66,7 @@ export default function BillTo({ register, errors }: BillToProps) {
         <SingleInput
           title="Country"
           gridcolumn="span 2"
+          gridcolumntablet="3"
           inputType="text"
           register={register("billTo.country", {
             required: "Country is required",
@@ -90,4 +96,8 @@ const Inputs = styled.div`
   column-gap: 25px;
   row-gap: 23px;
   grid-template-columns: 1fr 1fr;
+
+  @media screen and (min-width: 616px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;

@@ -4,6 +4,7 @@ import BillFrom from "./BillFrom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PostInvoice } from "../../types/types";
 import BillTo from "./BillTo";
+import AboutProject from "./AboutProject";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -16,6 +17,8 @@ export default function AddOrEditInvoice({
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    control,
   } = useForm<PostInvoice>();
 
   console.log("Error ", errors);
@@ -35,6 +38,12 @@ export default function AddOrEditInvoice({
           <Title>New Invoice</Title>
           <BillFrom register={register} errors={errors} />
           <BillTo register={register} errors={errors} />
+          <AboutProject
+            register={register}
+            errors={errors}
+            control={control}
+            setValue={setValue}
+          />
         </StyledAddOrEditInvoice>
         <button>submit</button>
       </StyledAddOrEditInvoiceModal>
@@ -58,11 +67,20 @@ const StyledAddOrEditInvoiceModal = styled.form`
   padding-bottom: 88px;
   max-width: 616px;
   z-index: 100;
+
+  @media screen and (min-width: 616px) {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
 `;
 
 const StyledAddOrEditInvoice = styled.div`
   width: 327px;
   margin: auto;
+
+  @media screen and (min-width: 616px) {
+    width: 504px;
+  }
 `;
 
 const GoBack = styled.div`

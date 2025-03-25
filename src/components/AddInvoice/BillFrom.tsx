@@ -16,6 +16,7 @@ export default function BillFrom({ register, errors }: BillFromProps) {
         <SingleInput
           title="Street Address"
           gridcolumn="span 2"
+          gridcolumntablet="span 3"
           inputType="text"
           register={register("billFrom.streetAddress", {
             required: "street address is required",
@@ -25,6 +26,7 @@ export default function BillFrom({ register, errors }: BillFromProps) {
         <SingleInput
           title="City"
           gridcolumn="1"
+          gridcolumntablet="1"
           inputType="text"
           register={register("billFrom.city", {
             required: "city is required",
@@ -34,6 +36,7 @@ export default function BillFrom({ register, errors }: BillFromProps) {
         <SingleInput
           title="Post Code"
           gridcolumn="2"
+          gridcolumntablet="2"
           inputType="text"
           register={register("billFrom.postCode", {
             required: "post code is required",
@@ -43,6 +46,7 @@ export default function BillFrom({ register, errors }: BillFromProps) {
         <SingleInput
           title="Country"
           gridcolumn="span 2"
+          gridcolumntablet="3"
           inputType="text"
           register={register("billFrom.country", {
             required: "country code is required",
@@ -72,4 +76,8 @@ const Inputs = styled.div`
   column-gap: 25px;
   row-gap: 23px;
   grid-template-columns: 1fr 1fr;
+
+  @media screen and (min-width: 616px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;

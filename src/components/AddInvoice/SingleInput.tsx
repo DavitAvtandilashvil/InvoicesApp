@@ -7,6 +7,7 @@ interface SingleInputProps {
   register: UseFormRegisterReturn;
   error?: string;
   gridcolumn?: string;
+  gridcolumntablet?: string;
 }
 
 export default function SingleInput({
@@ -15,9 +16,13 @@ export default function SingleInput({
   gridcolumn,
   register,
   inputType,
+  gridcolumntablet,
 }: SingleInputProps) {
   return (
-    <StyledSingleInput gridcolumn={gridcolumn ?? ""}>
+    <StyledSingleInput
+      gridcolumn={gridcolumn ?? ""}
+      gridcolumntablet={gridcolumntablet ?? ""}
+    >
       <InputWrapper>
         <label>{title}</label>
         <input type={inputType} {...register} />
@@ -29,10 +34,15 @@ export default function SingleInput({
 
 interface StyledSingleInputProps {
   gridcolumn: string;
+  gridcolumntablet: string;
 }
 
 const StyledSingleInput = styled.div<StyledSingleInputProps>`
   grid-column: ${({ gridcolumn }) => gridcolumn};
+
+  @media screen and (min-width: 616px) {
+    grid-column: ${({ gridcolumntablet }) => gridcolumntablet};
+  }
 `;
 
 const InputWrapper = styled.div`
