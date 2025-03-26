@@ -34,7 +34,7 @@ export default function ItemList({
   useEffect(() => {
     // Add one default item when the component mounts if items is empty
     if (fields.length === 0) {
-      append({ itemName: "", quantity: 1, price: 0, total: 0 });
+      append({ itemName: "", quantity: 1, price: 1, total: 1 });
     }
   }, [fields, append]);
 
@@ -86,7 +86,7 @@ export default function ItemList({
                 inputType="number"
                 register={register(`items.${index}.price`, {
                   required: "Price is required",
-                  min: { value: 0, message: "Must be at least 0" },
+                  min: { value: 1, message: "Must be at least 1" },
                 })}
                 error={errors?.items?.[index]?.price?.message}
               />
@@ -111,7 +111,7 @@ export default function ItemList({
       <AddButton
         type="button"
         onClick={() =>
-          append({ itemName: "", quantity: 1, price: 0, total: 0 })
+          append({ itemName: "", quantity: 1, price: 1, total: 1 })
         }
       >
         + Add New Item
