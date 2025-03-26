@@ -14,22 +14,31 @@ export default function BillTo({ register, errors }: BillToProps) {
       <Title>Bill To</Title>
       <Inputs>
         <SingleInput
-          title="Clients Name"
+          title="Client's Name"
           gridcolumn="span 2"
           gridcolumntablet="span 3"
           inputType="text"
           register={register("billTo.clientName", {
             required: "Client Name is required",
+            pattern: {
+              value: /^[a-zA-Z\s-]+$/,
+              message:
+                "Client Name can only contain letters, spaces, and hyphens",
+            },
           })}
           error={errors?.billTo?.clientName?.message}
         />
         <SingleInput
-          title="Clients Email"
+          title="Client's Email"
           gridcolumn="span 2"
           gridcolumntablet="span 3"
           inputType="text"
           register={register("billTo.clientEmail", {
             required: "Client Email is required",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Please enter a valid email address",
+            },
           })}
           error={errors?.billTo?.clientEmail?.message}
         />
@@ -40,6 +49,15 @@ export default function BillTo({ register, errors }: BillToProps) {
           inputType="text"
           register={register("billTo.streetAddress", {
             required: "Street Address is required",
+            minLength: {
+              value: 5,
+              message: "Street address must be at least 5 characters long",
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9\s,.'-]+$/,
+              message:
+                "Street address can only contain letters, numbers, spaces, commas, periods, and hyphens",
+            },
           })}
           error={errors?.billTo?.streetAddress?.message}
         />
@@ -50,6 +68,11 @@ export default function BillTo({ register, errors }: BillToProps) {
           inputType="text"
           register={register("billTo.city", {
             required: "City is required",
+            pattern: {
+              value: /^[a-zA-Z\s-]+$/,
+              message:
+                "City name can only contain letters, spaces, and hyphens",
+            },
           })}
           error={errors?.billTo?.city?.message}
         />
@@ -59,7 +82,12 @@ export default function BillTo({ register, errors }: BillToProps) {
           gridcolumntablet="2"
           inputType="text"
           register={register("billTo.postCode", {
-            required: "City is required",
+            required: "Post Code is required",
+            pattern: {
+              value: /^[0-9]{5}([-]?[0-9]{4})?$/, // Example: 12345 or 12345-6789 (for US)
+              message:
+                "Post Code must be a valid format (e.g., 12345 or 12345-6789)",
+            },
           })}
           error={errors?.billTo?.postCode?.message}
         />
@@ -70,6 +98,10 @@ export default function BillTo({ register, errors }: BillToProps) {
           inputType="text"
           register={register("billTo.country", {
             required: "Country is required",
+            pattern: {
+              value: /^[a-zA-Z\s]+$/,
+              message: "Country name can only contain letters and spaces",
+            },
           })}
           error={errors?.billTo?.country?.message}
         />

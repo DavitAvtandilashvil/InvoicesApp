@@ -12,6 +12,7 @@ import { PostInvoice } from "../../types/types";
 import calendar from "/calendar.png";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import SingleInput from "./SingleInput";
 
 interface AboutProjectProps {
   register: UseFormRegister<PostInvoice>;
@@ -20,7 +21,12 @@ interface AboutProjectProps {
   setValue: UseFormSetValue<PostInvoice>;
 }
 
-export default function AboutProject({ control, setValue }: AboutProjectProps) {
+export default function AboutProject({
+  control,
+  setValue,
+  register,
+  errors,
+}: AboutProjectProps) {
   const [paymentTerm, setPaymentTerm] = useState("30 days");
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
@@ -95,6 +101,16 @@ export default function AboutProject({ control, setValue }: AboutProjectProps) {
             )}
           </InputWrapper>
         </StyledDropDown>
+        <SingleInput
+          title="Project Description"
+          gridcolumn="span 2"
+          gridcolumntablet="span 2"
+          inputType="text"
+          register={register("projectDescription", {
+            required: "project description is required",
+          })}
+          error={errors?.projectDescription?.message}
+        />
       </Inputs>
     </StyledAboutProject>
   );
@@ -109,14 +125,14 @@ const Inputs = styled.div`
   column-gap: 25px;
   row-gap: 23px;
   grid-template-columns: 1fr 1fr;
-
-  @media screen and (min-width: 616px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 `;
 
 const StyledDate = styled.div`
   grid-column: span 2;
+
+  @media screen and (min-width: 616px) {
+    grid-column: span 1;
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -157,6 +173,10 @@ const InputWrapper = styled.div`
 
 const StyledDropDown = styled.div`
   grid-column: span 2;
+
+  @media screen and (min-width: 616px) {
+    grid-column: span 1;
+  }
 `;
 
 const DropDownValue = styled.div`
@@ -212,4 +232,5 @@ const OneOption = styled.p`
   line-height: 15px;
   letter-spacing: -0.25px;
   border-bottom: 1px solid ${({ theme }) => theme.checkboxBg};
+  cursor: pointer;
 `;

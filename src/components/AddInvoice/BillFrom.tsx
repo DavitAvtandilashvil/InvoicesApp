@@ -19,7 +19,16 @@ export default function BillFrom({ register, errors }: BillFromProps) {
           gridcolumntablet="span 3"
           inputType="text"
           register={register("billFrom.streetAddress", {
-            required: "street address is required",
+            required: "Street address is required",
+            minLength: {
+              value: 5,
+              message: "Street address must be at least 5 characters long",
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9\s,.'-]+$/,
+              message:
+                "Street address can only contain letters, numbers, spaces, commas, periods, and hyphens",
+            },
           })}
           error={errors?.billFrom?.streetAddress?.message}
         />
@@ -29,7 +38,12 @@ export default function BillFrom({ register, errors }: BillFromProps) {
           gridcolumntablet="1"
           inputType="text"
           register={register("billFrom.city", {
-            required: "city is required",
+            required: "City is required",
+            pattern: {
+              value: /^[a-zA-Z\s-]+$/,
+              message:
+                "City name can only contain letters, spaces, and hyphens",
+            },
           })}
           error={errors?.billFrom?.city?.message}
         />
@@ -39,7 +53,12 @@ export default function BillFrom({ register, errors }: BillFromProps) {
           gridcolumntablet="2"
           inputType="text"
           register={register("billFrom.postCode", {
-            required: "post code is required",
+            required: "Post code is required",
+            pattern: {
+              value: /^[0-9]{5}([-]?[0-9]{4})?$/, // Example: 12345 or 12345-6789 (for US)
+              message:
+                "Post code must be a valid format (e.g., 12345 or 12345-6789)",
+            },
           })}
           error={errors?.billFrom?.postCode?.message}
         />
@@ -49,7 +68,11 @@ export default function BillFrom({ register, errors }: BillFromProps) {
           gridcolumntablet="3"
           inputType="text"
           register={register("billFrom.country", {
-            required: "country code is required",
+            required: "Country is required",
+            pattern: {
+              value: /^[a-zA-Z\s]+$/,
+              message: "Country name can only contain letters and spaces",
+            },
           })}
           error={errors?.billFrom?.country?.message}
         />

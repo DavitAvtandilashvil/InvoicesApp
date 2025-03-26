@@ -8,6 +8,8 @@ interface SingleInputProps {
   error?: string;
   gridcolumn?: string;
   gridcolumntablet?: string;
+  disabled?: boolean;
+  value?: number;
 }
 
 export default function SingleInput({
@@ -17,6 +19,8 @@ export default function SingleInput({
   register,
   inputType,
   gridcolumntablet,
+  disabled = false,
+  value,
 }: SingleInputProps) {
   return (
     <StyledSingleInput
@@ -25,7 +29,12 @@ export default function SingleInput({
     >
       <InputWrapper>
         <label>{title}</label>
-        <input type={inputType} {...register} />
+        <input
+          type={inputType}
+          {...register}
+          disabled={disabled}
+          value={value}
+        />
       </InputWrapper>
       {error && <Error>{error}</Error>}
     </StyledSingleInput>

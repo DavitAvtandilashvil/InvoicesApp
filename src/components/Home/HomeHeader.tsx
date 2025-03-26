@@ -278,6 +278,7 @@ const NewDiv = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
 
   & > p {
     font-weight: 700;

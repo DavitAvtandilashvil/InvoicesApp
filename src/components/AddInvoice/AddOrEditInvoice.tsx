@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { PostInvoice } from "../../types/types";
 import BillTo from "./BillTo";
 import AboutProject from "./AboutProject";
+import ItemList from "./ItemList";
+import Buttons from "./Buttons";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -28,8 +30,11 @@ export default function AddOrEditInvoice({
   };
 
   return (
-    <AddOrEditInvoiceContainer>
-      <StyledAddOrEditInvoiceModal onSubmit={handleSubmit(onSubmit)}>
+    <AddOrEditInvoiceContainer onClick={() => setNewInvoiceOpen("false")}>
+      <StyledAddOrEditInvoiceModal
+        onSubmit={handleSubmit(onSubmit)}
+        onClick={(e) => e.stopPropagation()}
+      >
         <StyledAddOrEditInvoice>
           <GoBack onClick={() => setNewInvoiceOpen("false")}>
             <FaChevronLeft color="#7C5DFA" size={14} />
@@ -44,8 +49,15 @@ export default function AddOrEditInvoice({
             control={control}
             setValue={setValue}
           />
+          <ItemList
+            register={register}
+            errors={errors}
+            control={control}
+            setValue={setValue}
+          />
         </StyledAddOrEditInvoice>
-        <button>submit</button>
+
+        <Buttons />
       </StyledAddOrEditInvoiceModal>
     </AddOrEditInvoiceContainer>
   );
@@ -60,11 +72,16 @@ const AddOrEditInvoiceContainer = styled.div`
   box-shadow: 0px 10px 10px -10px #48549f1a;
   background-color: #0000007f;
   overflow-y: auto;
+
+  @media screen and (min-width: 1440px) {
+    top: 0;
+    left: 103px;
+  }
 `;
 
 const StyledAddOrEditInvoiceModal = styled.form`
   background-color: ${({ theme }) => theme.secondaryBg};
-  padding-bottom: 88px;
+  /* padding-bottom: 88px; */
   max-width: 616px;
   z-index: 100;
 

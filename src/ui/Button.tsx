@@ -9,6 +9,7 @@ interface ButtonProps {
   hoverthemebg?: string;
   hoverthemetxt?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  type?: "button" | "submit" | "reset";
 }
 
 export default function Button({
@@ -19,6 +20,7 @@ export default function Button({
   hoverthemebg = "paidButtonHoverBg",
   hoverthemetxt = "",
   onClick,
+  type = "button",
 }: ButtonProps) {
   return (
     <StyledButton
@@ -28,6 +30,7 @@ export default function Button({
       hoverthemebg={hoverthemebg}
       hoverthemetxt={hoverthemetxt}
       onClick={onClick}
+      type={type}
     >
       {children}
     </StyledButton>
