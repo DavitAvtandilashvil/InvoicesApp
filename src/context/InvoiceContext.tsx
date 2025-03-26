@@ -16,6 +16,8 @@ interface InvoiceContextType {
   setSingleInvoiceLoader: React.Dispatch<React.SetStateAction<boolean>>;
   singleInvoiceError: string | null;
   setSingleInvoiceError: React.Dispatch<React.SetStateAction<string | null>>;
+  render: boolean;
+  setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultValues: InvoiceContextType = {
@@ -33,6 +35,8 @@ const defaultValues: InvoiceContextType = {
   setSingleInvoiceLoader: () => {},
   singleInvoiceError: null,
   setSingleInvoiceError: () => {},
+  render: false,
+  setRender: () => {},
 };
 
 const InvoiceContext = createContext<InvoiceContextType>(defaultValues);
@@ -51,6 +55,7 @@ function InvoiceContextProvider({ children }: InvoiceContextProviderTypes) {
   const [singleInvoiceError, setSingleInvoiceError] = useState<string | null>(
     null
   );
+  const [render, setRender] = useState(false);
 
   return (
     <InvoiceContext.Provider
@@ -69,6 +74,8 @@ function InvoiceContextProvider({ children }: InvoiceContextProviderTypes) {
         setSingleInvoiceLoader,
         singleInvoiceError,
         setSingleInvoiceError,
+        render,
+        setRender,
       }}
     >
       {children}

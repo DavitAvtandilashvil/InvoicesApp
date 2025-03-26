@@ -22,6 +22,7 @@ export default function HomeHeader() {
     setAllInvoiceError,
     setAllInvoices,
     allInvoices,
+    render,
   } = useInvoice();
 
   const handleFilterChange = (status: string) => {
@@ -56,7 +57,13 @@ export default function HomeHeader() {
     };
 
     fetchAllInvoce();
-  }, [setAllInvoiceError, setAllInvoiceLoader, filterQuery, setAllInvoices]);
+  }, [
+    setAllInvoiceError,
+    setAllInvoiceLoader,
+    filterQuery,
+    setAllInvoices,
+    render,
+  ]);
 
   return (
     <>

@@ -8,6 +8,7 @@ import AboutProject from "./AboutProject";
 import ItemList from "./ItemList";
 import Buttons from "./Buttons";
 import { apiAddInvoice } from "../../services/apiAddInvoice";
+import useInvoice from "../../context/useInvoice";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -24,10 +25,14 @@ export default function AddOrEditInvoice({
     control,
   } = useForm<PostInvoice>();
 
+  const { setRender } = useInvoice();
+
   console.log("Error ", errors);
 
-  const onSubmit: SubmitHandler<PostInvoice> = (data) => {
-    apiAddInvoice(data);
+  const onSubmit: SubmitHandler<PostInvoice> = async (data) => {
+    await apiAddInvoice(data);
+    setRender((render) => !render);
+    setNewInvoiceOpen("false");
   };
 
   return (
