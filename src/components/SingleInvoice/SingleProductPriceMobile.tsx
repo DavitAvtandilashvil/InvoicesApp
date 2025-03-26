@@ -8,6 +8,7 @@ interface SingleProductPriceMobileProps {
 export default function SingleProductPriceMobile({
   item,
 }: SingleProductPriceMobileProps) {
+  console.log(item);
   return (
     <StyledSingleProductPriceMobile>
       <TitleAndQuantityDiv>

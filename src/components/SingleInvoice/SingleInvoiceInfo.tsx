@@ -4,9 +4,19 @@ import ProductsAndPrices from "./ProductsAndPrices";
 import GrandTotal from "./GrandTotal";
 import useInvoice from "../../context/useInvoice";
 import { calculatePaymentDue, formatDate } from "../../services/Date";
+import { useEffect, useState } from "react";
 
 export default function SingleInvoiceInfo() {
   const { singleInvoice } = useInvoice();
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    singleInvoice?.items.map((item) => {
+      total = total + item.total;
+    });
+    setGrandTotal(total);
+  }, [singleInvoice?.items]);
 
   if (!singleInvoice) return;
 
@@ -63,7 +73,7 @@ export default function SingleInvoiceInfo() {
       </ClientInfoContainer>
 
       <ProductsAndPrices items={singleInvoice?.items} />
-      <GrandTotal grandTotal={singleInvoice?.price} />
+      <GrandTotal grandTotal={grandTotal} />
     </StyledSingleInvoiceInfo>
   );
 }

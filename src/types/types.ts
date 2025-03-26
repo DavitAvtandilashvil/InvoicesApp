@@ -33,9 +33,6 @@ export interface Invoice {
 }
 
 export interface PostInvoice {
-  clientName: string;
-  date: string;
-  price: number;
   paymentStatus: "Paid" | "Pending" | "Draft";
   billFrom: {
     streetAddress: string;

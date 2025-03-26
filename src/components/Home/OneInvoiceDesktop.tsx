@@ -3,6 +3,7 @@ import { FaHashtag } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { Invoice } from "../../types/types";
 import { formatDate } from "../../services/Date";
+import { useEffect, useState } from "react";
 
 interface OneInvoiceDesktopProps {
   invoiceData: Invoice;
@@ -11,6 +12,15 @@ interface OneInvoiceDesktopProps {
 export default function OneInvoiceDesktop({
   invoiceData,
 }: OneInvoiceDesktopProps) {
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    invoiceData.items.map((item) => {
+      total = total + item.total;
+    });
+    setGrandTotal(total);
+  }, [invoiceData.items]);
   return (
     <StyledOneInvoice>
       <IdContainer>
@@ -19,7 +29,7 @@ export default function OneInvoiceDesktop({
       </IdContainer>
       <InvoiceDate>Due {formatDate(invoiceData.invoiceDate)}</InvoiceDate>
       <Name>{invoiceData.billTo.clientName}</Name>
-      <Price>£ {invoiceData.price}</Price>
+      <Price>£ {grandTotal}</Price>
       <PaymentStatus status={invoiceData.paymentStatus}>
         <div></div>
         <PaymentStatusText status={invoiceData.paymentStatus}>

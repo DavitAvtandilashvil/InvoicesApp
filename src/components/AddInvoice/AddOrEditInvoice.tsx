@@ -7,6 +7,7 @@ import BillTo from "./BillTo";
 import AboutProject from "./AboutProject";
 import ItemList from "./ItemList";
 import Buttons from "./Buttons";
+import { apiAddInvoice } from "../../services/apiAddInvoice";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -26,7 +27,7 @@ export default function AddOrEditInvoice({
   console.log("Error ", errors);
 
   const onSubmit: SubmitHandler<PostInvoice> = (data) => {
-    console.log(data);
+    apiAddInvoice(data);
   };
 
   return (
@@ -57,7 +58,7 @@ export default function AddOrEditInvoice({
           />
         </StyledAddOrEditInvoice>
 
-        <Buttons />
+        <Buttons setValue={setValue} />
       </StyledAddOrEditInvoiceModal>
     </AddOrEditInvoiceContainer>
   );

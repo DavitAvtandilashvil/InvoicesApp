@@ -13,7 +13,7 @@ export default function SingleProductPriceDesktop({
       <Item>{item.itemName}</Item>
       <Quantity>{item.quantity}</Quantity>
       <Price>£ {item.price}</Price>
-      <Total>£ {item.price}</Total>
+      <Total>£ {item.total}</Total>
     </StyledSingleProductPriceDesktop>
   );
 }

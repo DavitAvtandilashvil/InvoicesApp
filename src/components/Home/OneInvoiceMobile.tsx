@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FaHashtag } from "react-icons/fa";
 import { Invoice } from "../../types/types";
 import { formatDate } from "../../services/Date";
+import { useEffect, useState } from "react";
 
 interface OneInvoiceMobileProps {
   invoiceData: Invoice;
@@ -10,6 +11,16 @@ interface OneInvoiceMobileProps {
 export default function OneInvoiceMobile({
   invoiceData,
 }: OneInvoiceMobileProps) {
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    invoiceData.items.map((item) => {
+      total = total + item.total;
+    });
+    setGrandTotal(total);
+  }, [invoiceData.items]);
+
   return (
     <StyledOneInvoice>
       <IdAndName>
@@ -23,7 +34,7 @@ export default function OneInvoiceMobile({
       <DateAndPaymentContainer>
         <DateAndPayment>
           <p>Due {formatDate(invoiceData.invoiceDate)}</p>
-          <h2>£ {invoiceData.price}</h2>
+          <h2>£ {grandTotal}</h2>
         </DateAndPayment>
         <PaymentStatus status={invoiceData.paymentStatus}>
           <div></div>

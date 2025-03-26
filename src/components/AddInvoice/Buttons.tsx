@@ -1,7 +1,21 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
+import { UseFormSetValue } from "react-hook-form";
+import { PostInvoice } from "../../types/types";
 
-export default function Buttons() {
+interface ButtonsProps {
+  setValue: UseFormSetValue<PostInvoice>;
+}
+
+export default function Buttons({ setValue }: ButtonsProps) {
+  const handleDraft = () => {
+    setValue("paymentStatus", "Draft");
+  };
+
+  const handleSaveAndSend = () => {
+    setValue("paymentStatus", "Pending");
+  };
+
   return (
     <StyledButtons>
       <ButtonSpace></ButtonSpace>
@@ -20,10 +34,14 @@ export default function Buttons() {
             size="medium"
             colorthemebg="draftButtonBg"
             colorthemetxt="draftButtonTxt"
+            hoverthemebg="editButtonHoverBg"
+            hoverthemetxt="editButtonHoverTxt"
+            type="submit"
+            onClick={handleDraft}
           >
             Draft
           </Button>
-          <Button size="large" type="submit">
+          <Button size="large" type="submit" onClick={handleSaveAndSend}>
             Save & Send
           </Button>
         </ButtonForSave>
