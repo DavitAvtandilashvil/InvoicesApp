@@ -9,6 +9,7 @@ import ItemList from "./ItemList";
 import Buttons from "./Buttons";
 import { apiAddInvoice } from "../../services/apiAddInvoice";
 import useInvoice from "../../context/useInvoice";
+import { motion } from "framer-motion";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -23,6 +24,7 @@ export default function AddOrEditInvoice({
     formState: { errors },
     setValue,
     control,
+    reset,
   } = useForm<PostInvoice>();
 
   const { setRender } = useInvoice();
@@ -38,6 +40,11 @@ export default function AddOrEditInvoice({
   return (
     <AddOrEditInvoiceContainer onClick={() => setNewInvoiceOpen("false")}>
       <StyledAddOrEditInvoiceModal
+        as={motion.form}
+        initial={{ x: -900, opacity: 1 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -900, opacity: 0 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
         onSubmit={handleSubmit(onSubmit)}
         onClick={(e) => e.stopPropagation()}
       >
@@ -63,7 +70,7 @@ export default function AddOrEditInvoice({
           />
         </StyledAddOrEditInvoice>
 
-        <Buttons setValue={setValue} />
+        <Buttons setValue={setValue} reset={reset} />
       </StyledAddOrEditInvoiceModal>
     </AddOrEditInvoiceContainer>
   );

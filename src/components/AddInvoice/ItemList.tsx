@@ -11,6 +11,7 @@ import {
 import { PostInvoice } from "../../types/types";
 import SingleInput from "./SingleInput";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 interface ItemListProps {
   register: UseFormRegister<PostInvoice>;
@@ -33,6 +34,7 @@ export default function ItemList({
 
   useEffect(() => {
     // Add one default item when the component mounts if items is empty
+
     if (fields.length === 0) {
       append({ itemName: "", quantity: 1, price: 1, total: 1 });
     }
@@ -46,6 +48,14 @@ export default function ItemList({
       setValue(`items.${index}.total`, total, { shouldValidate: true });
     });
   }, [watchedItems, setValue]);
+
+  const handleDeleteList = (index: number) => {
+    if (fields.length === 1) {
+      toast.error("You can't clear all the fields.");
+    } else {
+      remove(index);
+    }
+  };
 
   return (
     <StyledItemList>
@@ -102,7 +112,8 @@ export default function ItemList({
               <StyledTrash
                 color="#777F98"
                 size={17}
-                onClick={() => remove(index)}
+                onClick={() => handleDeleteList(index)}
+                cursor="pointer"
               />
             </Inputs>
           );

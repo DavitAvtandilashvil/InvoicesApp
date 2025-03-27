@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
-import { UseFormSetValue } from "react-hook-form";
+import { UseFormReset, UseFormSetValue } from "react-hook-form";
 import { PostInvoice } from "../../types/types";
+import { toast } from "react-toastify";
 
 interface ButtonsProps {
   setValue: UseFormSetValue<PostInvoice>;
+  reset: UseFormReset<PostInvoice>;
 }
 
-export default function Buttons({ setValue }: ButtonsProps) {
+export default function Buttons({ setValue, reset }: ButtonsProps) {
   const handleDraft = () => {
     setValue("paymentStatus", "Draft");
   };
@@ -16,36 +18,44 @@ export default function Buttons({ setValue }: ButtonsProps) {
     setValue("paymentStatus", "Pending");
   };
 
+  const handleDiscard = () => {
+    reset();
+    toast.success("You cleared all the information.");
+  };
+
   return (
     <StyledButtons>
       <ButtonSpace></ButtonSpace>
-      <ButtonsDiv>
-        <Button
-          size="medium"
-          colorthemebg="editButtonBg"
-          colorthemetxt="editButtonTxt"
-          hoverthemebg="editButtonHoverBg"
-          hoverthemetxt="editButtonHoverTxt"
-        >
-          Discard
-        </Button>
-        <ButtonForSave>
+      <Wrapper>
+        <ButtonsDiv>
           <Button
             size="medium"
-            colorthemebg="draftButtonBg"
-            colorthemetxt="draftButtonTxt"
+            colorthemebg="editButtonBg"
+            colorthemetxt="editButtonTxt"
             hoverthemebg="editButtonHoverBg"
             hoverthemetxt="editButtonHoverTxt"
-            type="submit"
-            onClick={handleDraft}
+            onClick={handleDiscard}
           >
-            Draft
+            Discard
           </Button>
-          <Button size="large" type="submit" onClick={handleSaveAndSend}>
-            Save & Send
-          </Button>
-        </ButtonForSave>
-      </ButtonsDiv>
+          <ButtonForSave>
+            <Button
+              size="medium"
+              colorthemebg="draftButtonBg"
+              colorthemetxt="draftButtonTxt"
+              hoverthemebg="editButtonHoverBg"
+              hoverthemetxt="editButtonHoverTxt"
+              type="submit"
+              onClick={handleDraft}
+            >
+              Draft
+            </Button>
+            <Button size="large" type="submit" onClick={handleSaveAndSend}>
+              Save & Send
+            </Button>
+          </ButtonForSave>
+        </ButtonsDiv>
+      </Wrapper>
     </StyledButtons>
   );
 }
@@ -62,13 +72,17 @@ const ButtonSpace = styled.div`
   width: 100%;
   height: 64px;
 `;
+
+const Wrapper = styled.div`
+  background-color: ${({ theme }) => theme.oneInvoiceBg};
+  box-shadow: 0px 10px 10px -10px #48549f1a;
+`;
+
 const ButtonsDiv = styled.div`
   max-width: 504px;
   margin: auto;
   width: 100%;
   height: 91px;
-  background-color: ${({ theme }) => theme.oneInvoiceBg};
-  box-shadow: 0px 10px 10px -10px #48549f1a;
   display: flex;
   align-items: center;
   justify-content: space-between;
