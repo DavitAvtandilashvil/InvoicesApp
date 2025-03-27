@@ -5,7 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { deleteSingleInvoice } from "../../services/apiDeleteSingleInvoice";
 import { toast } from "react-toastify";
 
-export default function PaymentStatus() {
+interface PaymentStatusProps {
+  setEditInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+export default function PaymentStatus({
+  setEditInvoiceOpen,
+}: PaymentStatusProps) {
   const { singleInvoice } = useInvoice();
 
   const navigate = useNavigate();
@@ -39,6 +45,7 @@ export default function PaymentStatus() {
           colorthemetxt="editButtonTxt"
           hoverthemebg="editButtonHoverBg"
           hoverthemetxt="editButtonHoverTxt"
+          onClick={() => setEditInvoiceOpen("true")}
         >
           Edit
         </Button>

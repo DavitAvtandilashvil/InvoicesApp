@@ -4,12 +4,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import PaymentStatus from "../components/SingleInvoice/PaymentStatus";
 import SingleInvoiceInfo from "../components/SingleInvoice/SingleInvoiceInfo";
 import MobileButtonDiv from "../components/SingleInvoice/MobileButtonDiv";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useInvoice from "../context/useInvoice";
 import { getSingleInvoice } from "../services/apiGetSingleInvoice";
 import Loader from "../ui/Loader";
+import AddOrEditInvoice from "../components/AddInvoice/AddOrEditInvoice";
 
 export default function SingleInvoice() {
+  const [editInvoiceOpen, setEditInvoiceOpen] = useState(() => {
+    return localStorage.getItem("editInvoiceOpen");
+  });
+
   const navigate = useNavigate();
   const { id } = useParams();
   const {
@@ -42,20 +47,35 @@ export default function SingleInvoice() {
     fetchSingleInvoice();
   }, [setSingleInvoiceError, setSingleInvoiceLoader, id, setSingleInvoice]);
 
+  useEffect(() => {
+    localStorage.setItem("editInvoiceOpen", editInvoiceOpen?.toString() ?? "");
+  }, [editInvoiceOpen]);
+
   if (singleInvoiceLoader) return <Loader />;
 
   return (
-    <InvoiceContainer>
-      <StyledSingleInvoice>
-        <GoBack onClick={() => navigate(-1)}>
-          <FaChevronLeft color="#7C5DFA" size={14} />
-          <p>Go Back</p>
-        </GoBack>
-        <PaymentStatus />
-        <SingleInvoiceInfo />
-      </StyledSingleInvoice>
-      <MobileButtonDiv invoiceId={singleInvoice?.id ?? ""} />
-    </InvoiceContainer>
+    <>
+      <InvoiceContainer>
+        <StyledSingleInvoice>
+          <GoBack onClick={() => navigate(-1)}>
+            <FaChevronLeft color="#7C5DFA" size={14} />
+            <p>Go Back</p>
+          </GoBack>
+          <PaymentStatus setEditInvoiceOpen={setEditInvoiceOpen} />
+          <SingleInvoiceInfo />
+        </StyledSingleInvoice>
+        <MobileButtonDiv
+          invoiceId={singleInvoice?.id ?? ""}
+          setEditInvoiceOpen={setEditInvoiceOpen}
+        />
+      </InvoiceContainer>
+      {editInvoiceOpen === "true" && (
+        <AddOrEditInvoice
+          setEditInvoiceOpen={setEditInvoiceOpen}
+          editInvoiceOpen={editInvoiceOpen}
+        />
+      )}
+    </>
   );
 }
 

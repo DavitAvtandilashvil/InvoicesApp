@@ -12,11 +12,17 @@ import useInvoice from "../../context/useInvoice";
 import { motion } from "framer-motion";
 
 interface AddOrEditInvoiceProps {
-  setNewInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
+  setNewInvoiceOpen?: React.Dispatch<React.SetStateAction<string | null>>;
+  setEditInvoiceOpen?: React.Dispatch<React.SetStateAction<string | null>>;
+  editInvoiceOpen?: string | null;
+  newInvoiceOpen?: string | null;
 }
 
 export default function AddOrEditInvoice({
   setNewInvoiceOpen,
+  setEditInvoiceOpen,
+  editInvoiceOpen,
+  newInvoiceOpen,
 }: AddOrEditInvoiceProps) {
   const {
     register,
@@ -32,13 +38,27 @@ export default function AddOrEditInvoice({
   console.log("Error ", errors);
 
   const onSubmit: SubmitHandler<PostInvoice> = async (data) => {
-    await apiAddInvoice(data);
-    setRender((render) => !render);
-    setNewInvoiceOpen("false");
+    if (newInvoiceOpen === "true") {
+      await apiAddInvoice(data);
+      setRender((render) => !render);
+      if (setNewInvoiceOpen) {
+        setNewInvoiceOpen("false");
+      }
+    } else if (setEditInvoiceOpen) {
+      setEditInvoiceOpen("false");
+    }
+  };
+
+  const handleCloseModal = () => {
+    if (setNewInvoiceOpen) {
+      setNewInvoiceOpen("false");
+    } else if (setEditInvoiceOpen) {
+      setEditInvoiceOpen("false");
+    }
   };
 
   return (
-    <AddOrEditInvoiceContainer onClick={() => setNewInvoiceOpen("false")}>
+    <AddOrEditInvoiceContainer onClick={handleCloseModal}>
       <StyledAddOrEditInvoiceModal
         as={motion.form}
         initial={{ x: -900, opacity: 1 }}
@@ -49,11 +69,12 @@ export default function AddOrEditInvoice({
         onClick={(e) => e.stopPropagation()}
       >
         <StyledAddOrEditInvoice>
-          <GoBack onClick={() => setNewInvoiceOpen("false")}>
+          <GoBack onClick={handleCloseModal}>
             <FaChevronLeft color="#7C5DFA" size={14} />
             <p>Go Back</p>
           </GoBack>
-          <Title>New Invoice</Title>
+          {newInvoiceOpen === "true" && <Title>New Invoice</Title>}
+          {editInvoiceOpen === "true" && <Title>Edit Invoice</Title>}
           <BillFrom register={register} errors={errors} />
           <BillTo register={register} errors={errors} />
           <AboutProject
@@ -94,7 +115,6 @@ const AddOrEditInvoiceContainer = styled.div`
 
 const StyledAddOrEditInvoiceModal = styled.form`
   background-color: ${({ theme }) => theme.secondaryBg};
-  /* padding-bottom: 88px; */
   max-width: 616px;
   z-index: 100;
 

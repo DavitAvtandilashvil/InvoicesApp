@@ -6,9 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 interface MobileButtonDivProps {
   invoiceId: string;
+  setEditInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export default function MobileButtonDiv({ invoiceId }: MobileButtonDivProps) {
+export default function MobileButtonDiv({
+  invoiceId,
+  setEditInvoiceOpen,
+}: MobileButtonDivProps) {
   const navigate = useNavigate();
 
   const deleteInvoice = async (id: string) => {
@@ -34,6 +38,7 @@ export default function MobileButtonDiv({ invoiceId }: MobileButtonDivProps) {
           colorthemetxt="editButtonTxt"
           hoverthemebg="editButtonHoverBg"
           hoverthemetxt="editButtonHoverTxt"
+          onClick={() => setEditInvoiceOpen("true")}
         >
           Edit
         </Button>

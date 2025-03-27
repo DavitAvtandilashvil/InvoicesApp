@@ -108,7 +108,10 @@ export default function HomeHeader() {
         </FilterContainer>
       </StyledHomeHeader>
       {newInvoiceOpen === "true" && (
-        <AddOrEditInvoice setNewInvoiceOpen={setNewInvoiceOpen} />
+        <AddOrEditInvoice
+          setNewInvoiceOpen={setNewInvoiceOpen}
+          newInvoiceOpen={newInvoiceOpen}
+        />
       )}
     </>
   );
