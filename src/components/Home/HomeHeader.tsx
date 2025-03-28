@@ -238,6 +238,7 @@ const FillterOptionsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  z-index: 50;
 
   @media screen and (min-width: 768px) {
     padding: 24px 80px 24px 24px;
