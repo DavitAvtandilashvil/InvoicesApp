@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
 import useInvoice from "../../context/useInvoice";
+import { Invoice } from "../../types/types";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { apiEditInvoice } from "../../services/apiEditInvoice";
 
 interface PaymentStatusProps {
   setEditInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -12,6 +16,32 @@ export default function PaymentStatus({
   setModalIsOpen,
 }: PaymentStatusProps) {
   const { singleInvoice } = useInvoice();
+  const navigate = useNavigate();
+
+  if (!singleInvoice) return;
+
+  const handleMarkAsPaid = async () => {
+    if (singleInvoice?.paymentStatus === "Paid") {
+      toast.error("The invoice is already Paid");
+      return;
+    }
+    try {
+      const updatedInvoice: Invoice = {
+        ...singleInvoice,
+        id: singleInvoice?.id,
+        paymentStatus: "Paid",
+      };
+
+      await apiEditInvoice(singleInvoice?.id, updatedInvoice);
+      navigate("/home");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Something went wrond");
+      }
+    }
+  };
 
   return (
     <StyledPaymentStatus>
@@ -40,7 +70,9 @@ export default function PaymentStatus({
         >
           delete
         </Button>
-        <Button size="large">Mark as paid</Button>
+        <Button size="large" onClick={handleMarkAsPaid}>
+          Mark as paid
+        </Button>
       </ButtonsDiv>
     </StyledPaymentStatus>
   );

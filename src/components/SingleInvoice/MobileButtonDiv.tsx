@@ -1,15 +1,46 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
+import { Invoice } from "../../types/types";
+import { toast } from "react-toastify";
+import { apiEditInvoice } from "../../services/apiEditInvoice";
+import { useNavigate } from "react-router-dom";
 
 interface MobileButtonDivProps {
   setEditInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  singleInvoice: Invoice;
 }
 
 export default function MobileButtonDiv({
   setEditInvoiceOpen,
   setModalIsOpen,
+  singleInvoice,
 }: MobileButtonDivProps) {
+  const navigate = useNavigate();
+
+  const handleMarkAsPaid = async () => {
+    if (singleInvoice?.paymentStatus === "Paid") {
+      toast.error("The invoice is already Paid");
+      return;
+    }
+    try {
+      const updatedInvoice: Invoice = {
+        ...singleInvoice,
+        id: singleInvoice?.id, // Ensure id is explicitly set
+        paymentStatus: "Paid",
+      };
+
+      await apiEditInvoice(singleInvoice?.id, updatedInvoice);
+      navigate("/home");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Something went wrond");
+      }
+    }
+  };
+
   return (
     <StyledMobileButtonDiv>
       <ButtonsContainer>
@@ -30,7 +61,9 @@ export default function MobileButtonDiv({
         >
           delete
         </Button>
-        <Button size="large">Mark as paid</Button>
+        <Button size="large" onClick={handleMarkAsPaid}>
+          Mark as paid
+        </Button>
       </ButtonsContainer>
     </StyledMobileButtonDiv>
   );

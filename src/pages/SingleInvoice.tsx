@@ -71,6 +71,8 @@ export default function SingleInvoice() {
 
   if (singleInvoiceLoader) return <SingleInvoiceSkl />;
 
+  if (!singleInvoice) return;
+
   return (
     <>
       <InvoiceContainer>
@@ -88,6 +90,7 @@ export default function SingleInvoice() {
         <MobileButtonDiv
           setEditInvoiceOpen={setEditInvoiceOpen}
           setModalIsOpen={setModalIsOpen}
+          singleInvoice={singleInvoice}
         />
       </InvoiceContainer>
       {editInvoiceOpen === "true" && (

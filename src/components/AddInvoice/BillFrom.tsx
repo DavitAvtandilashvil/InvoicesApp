@@ -53,11 +53,11 @@ export default function BillFrom({ register, errors }: BillFromProps) {
           gridcolumntablet="2"
           inputType="text"
           register={register("billFrom.postCode", {
-            required: "Post code is required",
+            required: "Post Code is required",
             pattern: {
-              value: /^[0-9]{5}([-]?[0-9]{4})?$/, // Example: 12345 or 12345-6789 (for US)
+              value: /^(?:\d{4}|\d{5}(-\d{4})?)$/, // Allows 4-digit, 5-digit, and 5+4 (e.g., 1234, 12345, 12345-6789)
               message:
-                "Post code must be a valid format (e.g., 12345 or 12345-6789)",
+                "Post Code must be 4 or 5 digits (e.g., 1234, 12345, 12345-6789)",
             },
           })}
           error={errors?.billFrom?.postCode?.message}
