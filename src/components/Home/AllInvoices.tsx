@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import OneInvoice from "./OneInvoice";
-import Loader from "../../ui/Loader";
 import useInvoice from "../../context/useInvoice";
+import HomeSkl from "../skeletons/HomeSkl";
 
 export default function AllInvoices() {
   const { allInvoices, allInvoiceLoader } = useInvoice();
 
-  if (allInvoiceLoader) return <Loader />;
+  if (allInvoiceLoader) return <HomeSkl />;
 
   return (
     <StyledAllInvoices>

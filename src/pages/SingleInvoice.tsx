@@ -7,8 +7,8 @@ import MobileButtonDiv from "../components/SingleInvoice/MobileButtonDiv";
 import { useEffect, useState } from "react";
 import useInvoice from "../context/useInvoice";
 import { getSingleInvoice } from "../services/apiGetSingleInvoice";
-import Loader from "../ui/Loader";
 import AddOrEditInvoice from "../components/AddInvoice/AddOrEditInvoice";
+import SingleInvoiceSkl from "../components/skeletons/SingleInvoiceSkl";
 
 export default function SingleInvoice() {
   const [editInvoiceOpen, setEditInvoiceOpen] = useState(() => {
@@ -51,7 +51,7 @@ export default function SingleInvoice() {
     localStorage.setItem("editInvoiceOpen", editInvoiceOpen?.toString() ?? "");
   }, [editInvoiceOpen]);
 
-  if (singleInvoiceLoader) return <Loader />;
+  if (singleInvoiceLoader) return <SingleInvoiceSkl />;
 
   return (
     <>
