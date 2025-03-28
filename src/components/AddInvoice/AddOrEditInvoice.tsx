@@ -2,20 +2,24 @@ import { FaChevronLeft } from "react-icons/fa";
 import styled from "styled-components";
 import BillFrom from "./BillFrom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { PostInvoice } from "../../types/types";
+import { Invoice, PostInvoice } from "../../types/types";
 import BillTo from "./BillTo";
 import AboutProject from "./AboutProject";
 import ItemList from "./ItemList";
-import Buttons from "./Buttons";
+
 import { apiAddInvoice } from "../../services/apiAddInvoice";
 import useInvoice from "../../context/useInvoice";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import AddButtons from "./AddButtons";
+import EditButtons from "./EditButtons";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen?: React.Dispatch<React.SetStateAction<string | null>>;
   setEditInvoiceOpen?: React.Dispatch<React.SetStateAction<string | null>>;
   editInvoiceOpen?: string | null;
   newInvoiceOpen?: string | null;
+  singleInvoice?: Invoice | null;
 }
 
 export default function AddOrEditInvoice({
@@ -23,6 +27,7 @@ export default function AddOrEditInvoice({
   setEditInvoiceOpen,
   editInvoiceOpen,
   newInvoiceOpen,
+  singleInvoice,
 }: AddOrEditInvoiceProps) {
   const {
     register,
@@ -31,6 +36,7 @@ export default function AddOrEditInvoice({
     setValue,
     control,
     reset,
+    watch,
   } = useForm<PostInvoice>();
 
   const { setRender } = useInvoice();
@@ -44,8 +50,10 @@ export default function AddOrEditInvoice({
       if (setNewInvoiceOpen) {
         setNewInvoiceOpen("false");
       }
-    } else if (setEditInvoiceOpen) {
-      setEditInvoiceOpen("false");
+    } else if (editInvoiceOpen === "true") {
+      if (setEditInvoiceOpen) {
+        setEditInvoiceOpen("false");
+      }
     }
   };
 
@@ -56,6 +64,30 @@ export default function AddOrEditInvoice({
       setEditInvoiceOpen("false");
     }
   };
+
+  useEffect(() => {
+    if (singleInvoice) {
+      setValue("billFrom.streetAddress", singleInvoice.billFrom.streetAddress);
+      setValue("billFrom.city", singleInvoice.billFrom.city);
+      setValue("billFrom.postCode", singleInvoice.billFrom.postCode);
+      setValue("billFrom.country", singleInvoice.billFrom.country);
+      setValue("billTo.clientName", singleInvoice.billTo.clientName);
+      setValue("billTo.clientEmail", singleInvoice.billTo.clientEmail);
+      setValue("billTo.streetAddress", singleInvoice.billTo.streetAddress);
+      setValue("billTo.city", singleInvoice.billTo.city);
+      setValue("billTo.postCode", singleInvoice.billTo.postCode);
+      setValue("billTo.country", singleInvoice.billTo.country);
+      setValue("invoiceDate", singleInvoice.invoiceDate);
+      setValue("paymentTerms", singleInvoice.paymentTerms);
+      setValue("projectDescription", singleInvoice.projectDescription);
+      singleInvoice.items.forEach((item, index) => {
+        setValue(`items.${index}.itemName`, item.itemName);
+        setValue(`items.${index}.quantity`, item.quantity);
+        setValue(`items.${index}.price`, item.price);
+        setValue(`items.${index}.total`, item.total);
+      });
+    }
+  }, [singleInvoice, setValue]);
 
   return (
     <AddOrEditInvoiceContainer onClick={handleCloseModal}>
@@ -74,7 +106,9 @@ export default function AddOrEditInvoice({
             <p>Go Back</p>
           </GoBack>
           {newInvoiceOpen === "true" && <Title>New Invoice</Title>}
-          {editInvoiceOpen === "true" && <Title>Edit Invoice</Title>}
+          {editInvoiceOpen === "true" && (
+            <Title>Edit #{singleInvoice?.invoiceId}</Title>
+          )}
           <BillFrom register={register} errors={errors} />
           <BillTo register={register} errors={errors} />
           <AboutProject
@@ -91,7 +125,15 @@ export default function AddOrEditInvoice({
           />
         </StyledAddOrEditInvoice>
 
-        <Buttons setValue={setValue} reset={reset} />
+        {newInvoiceOpen && <AddButtons setValue={setValue} reset={reset} />}
+        {editInvoiceOpen && (
+          <EditButtons
+            setValue={setValue}
+            singleInvoice={singleInvoice}
+            watch={watch}
+            setEditInvoiceOpen={setEditInvoiceOpen}
+          />
+        )}
       </StyledAddOrEditInvoiceModal>
     </AddOrEditInvoiceContainer>
   );

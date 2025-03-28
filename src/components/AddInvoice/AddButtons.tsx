@@ -4,12 +4,12 @@ import { UseFormReset, UseFormSetValue } from "react-hook-form";
 import { PostInvoice } from "../../types/types";
 import { toast } from "react-toastify";
 
-interface ButtonsProps {
+interface AddButtonsProps {
   setValue: UseFormSetValue<PostInvoice>;
   reset: UseFormReset<PostInvoice>;
 }
 
-export default function Buttons({ setValue, reset }: ButtonsProps) {
+export default function AddButtons({ setValue, reset }: AddButtonsProps) {
   const handleDraft = () => {
     setValue("paymentStatus", "Draft");
   };

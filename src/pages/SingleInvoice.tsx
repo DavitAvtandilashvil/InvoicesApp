@@ -73,6 +73,7 @@ export default function SingleInvoice() {
         <AddOrEditInvoice
           setEditInvoiceOpen={setEditInvoiceOpen}
           editInvoiceOpen={editInvoiceOpen}
+          singleInvoice={singleInvoice}
         />
       )}
     </>
