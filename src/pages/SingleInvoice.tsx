@@ -9,11 +9,15 @@ import useInvoice from "../context/useInvoice";
 import { getSingleInvoice } from "../services/apiGetSingleInvoice";
 import AddOrEditInvoice from "../components/AddInvoice/AddOrEditInvoice";
 import SingleInvoiceSkl from "../components/skeletons/SingleInvoiceSkl";
+import Modal from "../ui/Modal";
+import { deleteSingleInvoice } from "../services/apiDeleteSingleInvoice";
+import { toast } from "react-toastify";
 
 export default function SingleInvoice() {
   const [editInvoiceOpen, setEditInvoiceOpen] = useState(() => {
     return localStorage.getItem("editInvoiceOpen");
   });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -51,6 +55,20 @@ export default function SingleInvoice() {
     localStorage.setItem("editInvoiceOpen", editInvoiceOpen?.toString() ?? "");
   }, [editInvoiceOpen]);
 
+  const deleteInvoice = async () => {
+    try {
+      const data = await deleteSingleInvoice(singleInvoice?.id ?? "");
+      toast.success(data.message);
+      navigate("/home");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
   if (singleInvoiceLoader) return <SingleInvoiceSkl />;
 
   return (
@@ -61,12 +79,15 @@ export default function SingleInvoice() {
             <FaChevronLeft color="#7C5DFA" size={14} />
             <p>Go Back</p>
           </GoBack>
-          <PaymentStatus setEditInvoiceOpen={setEditInvoiceOpen} />
+          <PaymentStatus
+            setEditInvoiceOpen={setEditInvoiceOpen}
+            setModalIsOpen={setModalIsOpen}
+          />
           <SingleInvoiceInfo />
         </StyledSingleInvoice>
         <MobileButtonDiv
-          invoiceId={singleInvoice?.id ?? ""}
           setEditInvoiceOpen={setEditInvoiceOpen}
+          setModalIsOpen={setModalIsOpen}
         />
       </InvoiceContainer>
       {editInvoiceOpen === "true" && (
@@ -74,6 +95,15 @@ export default function SingleInvoice() {
           setEditInvoiceOpen={setEditInvoiceOpen}
           editInvoiceOpen={editInvoiceOpen}
           singleInvoice={singleInvoice}
+        />
+      )}
+      {modalIsOpen && (
+        <Modal
+          setIsOpen={setModalIsOpen}
+          title="Confirm Deletion"
+          description="Are you sure you want to delete invoice #XM9141? This action cannot be
+          undone."
+          onClick={deleteInvoice}
         />
       )}
     </>

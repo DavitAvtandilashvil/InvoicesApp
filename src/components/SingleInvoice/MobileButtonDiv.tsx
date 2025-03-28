@@ -1,34 +1,15 @@
 import styled from "styled-components";
 import Button from "../../ui/Button";
-import { toast } from "react-toastify";
-import { deleteSingleInvoice } from "../../services/apiDeleteSingleInvoice";
-import { useNavigate } from "react-router-dom";
 
 interface MobileButtonDivProps {
-  invoiceId: string;
   setEditInvoiceOpen: React.Dispatch<React.SetStateAction<string | null>>;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function MobileButtonDiv({
-  invoiceId,
   setEditInvoiceOpen,
+  setModalIsOpen,
 }: MobileButtonDivProps) {
-  const navigate = useNavigate();
-
-  const deleteInvoice = async (id: string) => {
-    try {
-      const data = await deleteSingleInvoice(id);
-      toast.success(data.message);
-      navigate("/home");
-    } catch (err) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else {
-        toast.error("Something went wrong");
-      }
-    }
-  };
-
   return (
     <StyledMobileButtonDiv>
       <ButtonsContainer>
@@ -45,7 +26,7 @@ export default function MobileButtonDiv({
         <Button
           colorthemebg="deleteButtonBg"
           hoverthemebg="deleteButtonHoverBg"
-          onClick={() => deleteInvoice(invoiceId)}
+          onClick={() => setModalIsOpen(true)}
         >
           delete
         </Button>
