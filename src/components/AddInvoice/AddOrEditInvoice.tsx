@@ -6,13 +6,15 @@ import { Invoice, PostInvoice } from "../../types/types";
 import BillTo from "./BillTo";
 import AboutProject from "./AboutProject";
 import ItemList from "./ItemList";
-
 import { apiAddInvoice } from "../../services/apiAddInvoice";
 import useInvoice from "../../context/useInvoice";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import AddButtons from "./AddButtons";
 import EditButtons from "./EditButtons";
+import { toast } from "react-toastify";
+import { apiEditInvoice } from "../../services/apiEditInvoice";
+import { useNavigate } from "react-router-dom";
 
 interface AddOrEditInvoiceProps {
   setNewInvoiceOpen?: React.Dispatch<React.SetStateAction<string | null>>;
@@ -39,9 +41,35 @@ export default function AddOrEditInvoice({
     watch,
   } = useForm<PostInvoice>();
 
+  const navigate = useNavigate();
+
   const { setRender } = useInvoice();
 
   console.log("Error ", errors);
+
+  const isFormChanged = !(
+    singleInvoice?.billFrom?.streetAddress ===
+      watch("billFrom.streetAddress") &&
+    singleInvoice?.billFrom?.city === watch("billFrom.city") &&
+    singleInvoice?.billFrom?.postCode === watch("billFrom.postCode") &&
+    singleInvoice?.billFrom?.country === watch("billFrom.country") &&
+    singleInvoice?.billTo?.clientName === watch("billTo.clientName") &&
+    singleInvoice?.billTo?.clientEmail === watch("billTo.clientEmail") &&
+    singleInvoice?.billTo?.streetAddress === watch("billTo.streetAddress") &&
+    singleInvoice?.billTo?.city === watch("billTo.city") &&
+    singleInvoice?.billTo?.postCode === watch("billTo.postCode") &&
+    singleInvoice?.billTo?.country === watch("billTo.country") &&
+    singleInvoice?.invoiceDate === watch("invoiceDate") &&
+    singleInvoice?.paymentTerms === watch("paymentTerms") &&
+    singleInvoice?.projectDescription === watch("projectDescription") &&
+    singleInvoice?.items.every(
+      (item, index) =>
+        item.itemName === watch(`items.${index}.itemName`) &&
+        item.quantity === watch(`items.${index}.quantity`) &&
+        item.price === watch(`items.${index}.price`) &&
+        item.total === watch(`items.${index}.total`)
+    )
+  );
 
   const onSubmit: SubmitHandler<PostInvoice> = async (data) => {
     if (newInvoiceOpen === "true") {
@@ -51,9 +79,21 @@ export default function AddOrEditInvoice({
         setNewInvoiceOpen("false");
       }
     } else if (editInvoiceOpen === "true") {
+      if (!isFormChanged) {
+        toast.error("You need to change some value");
+        return;
+      }
+
+      if (!singleInvoice?.id) {
+        toast.error("Invoice ID is missing");
+        return;
+      }
+
+      await apiEditInvoice(singleInvoice?.id, data);
       if (setEditInvoiceOpen) {
         setEditInvoiceOpen("false");
       }
+      navigate("/home");
     }
   };
 
@@ -129,7 +169,6 @@ export default function AddOrEditInvoice({
         {editInvoiceOpen && (
           <EditButtons
             setValue={setValue}
-            singleInvoice={singleInvoice}
             watch={watch}
             setEditInvoiceOpen={setEditInvoiceOpen}
           />
