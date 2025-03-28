@@ -7,6 +7,7 @@ interface ModalProps {
   description: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  buttonTxt: string;
 }
 
 export default function Modal({
@@ -14,6 +15,7 @@ export default function Modal({
   description,
   onClick,
   setIsOpen,
+  buttonTxt,
 }: ModalProps) {
   return (
     <StyledModal onClick={() => setIsOpen(false)}>
@@ -37,7 +39,7 @@ export default function Modal({
             hoverthemebg="deleteButtonHoverBg"
             onClick={onClick}
           >
-            Delete
+            {buttonTxt}
           </Button>
         </ButtonsContainer>
       </ContentDiv>

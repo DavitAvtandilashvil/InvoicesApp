@@ -101,9 +101,10 @@ export default function SingleInvoice() {
         <Modal
           setIsOpen={setModalIsOpen}
           title="Confirm Deletion"
-          description="Are you sure you want to delete invoice #XM9141? This action cannot be
-          undone."
+          description={`Are you sure you want to delete invoice #${singleInvoice?.invoiceId}? This action cannot be
+          undone.`}
           onClick={deleteInvoice}
+          buttonTxt="Delete"
         />
       )}
     </>

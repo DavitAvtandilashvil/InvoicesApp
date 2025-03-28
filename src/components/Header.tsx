@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { FaCircle, FaSun, FaMoon, FaSignOutAlt } from "react-icons/fa";
+import { FaCircle, FaSun, FaMoon } from "react-icons/fa";
 import useInvoice from "../context/useInvoice";
 import { useUserInfo } from "../hooks/useUserInfo";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Modal from "../ui/Modal";
 
 export default function Header() {
-  const [openProfileModal, setOpenProfileModal] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { isDarkMode, setIsDarkMode } = useInvoice();
   const { user } = useUserInfo();
   const navigate = useNavigate();
@@ -40,21 +41,22 @@ export default function Header() {
               />
             )}
             <Line></Line>
-            <Profile onClick={() => setOpenProfileModal((isOpen) => !isOpen)}>
+            <Profile onClick={() => setModalIsOpen(true)}>
               <p>{user?.name[0].toUpperCase()}</p>
             </Profile>
-            {openProfileModal && (
-              <ProfileModal>
-                <LogOutDiv onClick={handleLogOut}>
-                  <FaSignOutAlt color="red" />
-                  <p>Log Out</p>
-                </LogOutDiv>
-              </ProfileModal>
-            )}
           </ProfileContainer>
         </StyledHeader>
       </HeaderContainer>
       <HeaderSpace></HeaderSpace>
+      {modalIsOpen && (
+        <Modal
+          setIsOpen={setModalIsOpen}
+          title="Confirm Logout?"
+          description="Are you sure you want to Log out?"
+          onClick={handleLogOut}
+          buttonTxt="Log Out"
+        />
+      )}
     </>
   );
 }
@@ -152,31 +154,6 @@ const Profile = styled.div`
     font-size: 20px;
     padding-top: 2px;
   }
-`;
-
-const ProfileModal = styled.div`
-  position: absolute;
-  top: 50px;
-  right: 50px;
-  width: 180px;
-  padding: 15px;
-  border-radius: 10px;
-  background-color: #301515;
-
-  @media screen and (min-width: 1440px) {
-    left: 100px;
-    bottom: 100px;
-    height: 50px;
-  }
-`;
-
-const LogOutDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  color: red;
-  cursor: pointer;
 `;
 
 const HeaderSpace = styled.div`
