@@ -16,8 +16,8 @@ export default function Modal({
   setIsOpen,
 }: ModalProps) {
   return (
-    <StyledModal>
-      <ContentDiv>
+    <StyledModal onClick={() => setIsOpen(false)}>
+      <ContentDiv onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
         <p>{description}</p>
         <ButtonsContainer>
