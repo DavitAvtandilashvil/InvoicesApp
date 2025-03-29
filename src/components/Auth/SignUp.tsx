@@ -57,7 +57,7 @@ export default function SignUp() {
         error={errors.password?.message}
       />
 
-      <Button type="submit">Sign In</Button>
+      <Button type="submit">Sign Up</Button>
     </Form>
   );
 }
